@@ -9,6 +9,7 @@ import WebCrawlerStatus from '../components/WebCrawlerStatus';
 import WebCrawlerList from '../components/WebCrawlerList';
 import { marketStats, dataSources } from '../data/propertyData';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
+import { BarChart, Home, TrendingUp, Building } from 'lucide-react';
 
 const Dashboard: React.FC = () => {
   const { t } = useLanguage();
@@ -27,37 +28,71 @@ const Dashboard: React.FC = () => {
           value={`${marketStats.averagePrice} €`}
           subtext={t('sqm')}
           change={marketStats.yearlyChange}
+          icon={<TrendingUp className="w-5 h-5" />}
         />
         
         <StatCard 
           title={t('dashboard.total.listings')}
           value={marketStats.totalListings.toLocaleString()}
           change={7.2}
+          icon={<Home className="w-5 h-5" />}
         />
         
         <StatCard 
           title={t('dashboard.price.sqm')}
           value={`${marketStats.pricePerSqm} €`}
           change={marketStats.quarterlyChange}
+          icon={<Building className="w-5 h-5" />}
         />
         
         <WebCrawlerStatus 
           lastUpdated={marketStats.lastUpdated}
           progress={85}
           totalSources={dataSources.length}
-          completedSources={dataSources.length}
+          completedSources={dataSources.filter((_, i) => i % 5 !== 0).length}
         />
       </div>
       
       {/* Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-        <PriceChart title={t('dashboard.price.trends')} />
-        <PropertyTypeChart title={t('property.types')} />
+        <Card className="overflow-hidden hover:shadow-lg transition-all duration-300">
+          <CardHeader className="pb-2">
+            <CardTitle className="flex items-center gap-2">
+              <BarChart className="h-5 w-5 text-albania-red" />
+              {t('dashboard.price.trends')}
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <PriceChart title="" />
+          </CardContent>
+        </Card>
+        
+        <Card className="overflow-hidden hover:shadow-lg transition-all duration-300">
+          <CardHeader className="pb-2">
+            <CardTitle className="flex items-center gap-2">
+              <BarChart className="h-5 w-5 text-albania-red" />
+              {t('property.types')}
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <PropertyTypeChart title="" />
+          </CardContent>
+        </Card>
       </div>
       
       {/* Table */}
       <div className="mb-8">
-        <RegionPriceTable title={t('dashboard.price.regions')} />
+        <Card className="overflow-hidden hover:shadow-lg transition-all duration-300">
+          <CardHeader className="pb-2">
+            <CardTitle className="flex items-center gap-2">
+              <TrendingUp className="h-5 w-5 text-albania-red" />
+              {t('dashboard.price.regions')}
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <RegionPriceTable title="" />
+          </CardContent>
+        </Card>
       </div>
 
       {/* Web Crawlers Section */}

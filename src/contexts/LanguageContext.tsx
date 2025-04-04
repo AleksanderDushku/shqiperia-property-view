@@ -12,7 +12,7 @@ interface LanguageContextType {
 const translations = {
   sq: {
     // Header
-    "site.title": "Prona në Shqipëri",
+    "site.title": "PronaStats",
     "nav.dashboard": "Paneli",
     "nav.market": "Tregu",
     "nav.properties": "Pronat",
@@ -60,6 +60,17 @@ const translations = {
     "properties.rooms": "Dhoma",
     "properties.location": "Vendndodhja",
     
+    // Crawler
+    "crawler.website": "Faqja",
+    "crawler.listing_count": "Numri i Pronave",
+    "crawler.last_update": "Përditësimi i Fundit",
+    "crawler.status": "Statusi",
+    "crawler.visit": "Vizito",
+    "crawler.success": "Sukses",
+    "crawler.pending": "Në pritje",
+    "crawler.failed": "Dështoi",
+    "crawler.description": "Të dhënat tona grumbullohen nga faqet më të mira të pronave në Shqipëri",
+    
     // About page
     "about.title": "Rreth Nesh",
     "about.subtitle": "Informacion mbi shërbimin tonë",
@@ -79,7 +90,7 @@ const translations = {
   
   en: {
     // Header
-    "site.title": "Properties in Albania",
+    "site.title": "PronaStats",
     "nav.dashboard": "Dashboard",
     "nav.market": "Market",
     "nav.properties": "Properties",
@@ -126,6 +137,17 @@ const translations = {
     "properties.size": "Size",
     "properties.rooms": "Rooms",
     "properties.location": "Location",
+    
+    // Crawler
+    "crawler.website": "Website",
+    "crawler.listing_count": "Listings",
+    "crawler.last_update": "Last Update",
+    "crawler.status": "Status",
+    "crawler.visit": "Visit",
+    "crawler.success": "Success",
+    "crawler.pending": "Pending",
+    "crawler.failed": "Failed",
+    "crawler.description": "Our data is collected from the best property websites in Albania",
     
     // About page
     "about.title": "About Us",

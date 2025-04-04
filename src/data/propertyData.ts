@@ -1,4 +1,3 @@
-
 // Real data for Albanian property market
 export interface Property {
   id: number;
@@ -155,8 +154,9 @@ export const propertyTypesData = [
   { name: 'Commercial', value: 5 }
 ];
 
-// Real data sources with actual URLs
+// Real data sources with actual URLs for Albania and international property listing websites
 export const dataSources = [
+  // Albanian websites
   { name: "merrjep.al", url: "https://www.merrjep.al/shpallje/shtepi-dhe-vila/" },
   { name: "prona.al", url: "https://prona.al/" },
   { name: "century21.al", url: "https://century21.al/" },
@@ -171,5 +171,17 @@ export const dataSources = [
   { name: "tiranaestate.com", url: "https://tiranaestate.com/" },
   { name: "albania-property.com", url: "https://albania-property.com/" },
   { name: "firstchoice-al.com", url: "https://firstchoice-al.com/" },
-  { name: "cpa-albania.com", url: "https://cpa-albania.com/" }
+  { name: "cpa-albania.com", url: "https://cpa-albania.com/" },
+  
+  // International websites with Albanian listings
+  { name: "rightmove.co.uk", url: "https://www.rightmove.co.uk/overseas-property/in-Albania.html" },
+  { name: "green-acres.com", url: "https://www.green-acres.com/en/properties/albania" },
+  { name: "propertylistings.ft.com", url: "https://propertylistings.ft.com/propertynews/albania.html" },
+  { name: "property-abroad.com", url: "https://www.property-abroad.com/albania/" },
+  { name: "primelocation.com", url: "https://www.primelocation.com/overseas/property/albania/" },
+  { name: "themovechannel.com", url: "https://www.themovechannel.com/property/albania/" },
+  { name: "aplaceinthesun.com", url: "https://www.aplaceinthesun.com/albania" },
+  { name: "tranio.com", url: "https://tranio.com/albania/" },
+  { name: "properstar.com", url: "https://properstar.com/search/albania" },
+  { name: "tirana-property.com", url: "https://tirana-property.com/" }
 ];
