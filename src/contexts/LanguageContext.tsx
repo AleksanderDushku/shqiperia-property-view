@@ -1,4 +1,3 @@
-
 import React, { createContext, useState, useContext, ReactNode } from 'react';
 
 type Language = 'sq' | 'en';
@@ -73,11 +72,17 @@ const translations = {
     
     // About page
     "about.title": "Rreth Nesh",
-    "about.subtitle": "Informacion mbi shërbimin tonë",
+    "about.subtitle": "Informacion mbi shërbimin tonë dhe ekipin që e bën të mundur",
     "about.description": "PronaStats ofron statistika dhe të dhëna mbi tregun e pronave në Shqipëri, duke mbledhur informacione nga burime të ndryshme për t'ju ofruar një pamje gjithëpërfshirëse të tregut.",
     "about.data.sources": "Burimet e të Dhënave",
     "about.disclaimer": "Shënim i Rëndësishëm",
     "about.disclaimer.text": "Të dhënat e paraqitura në këtë faqe janë vetëm për qëllime informative dhe nuk përbëjnë këshillë financiare apo të investimeve.",
+    "about.mission": "Misioni",
+    "about.team": "Ekipi",
+    "about.our.mission": "Misioni Ynë",
+    "about.our.values": "Vlerat Tona",
+    "about.our.team": "Ekipi Ynë",
+    "about.contact.us": "Na Kontaktoni",
     
     // Misc
     "currency": "Lekë",
@@ -151,11 +156,17 @@ const translations = {
     
     // About page
     "about.title": "About Us",
-    "about.subtitle": "Information about our service",
+    "about.subtitle": "Information about our service and the team behind it",
     "about.description": "PronaStats provides statistics and data about the Albanian property market, gathering information from various sources to give you a comprehensive view of the market.",
     "about.data.sources": "Data Sources",
     "about.disclaimer": "Important Disclaimer",
     "about.disclaimer.text": "The data presented on this site is for informational purposes only and does not constitute financial or investment advice.",
+    "about.mission": "Mission",
+    "about.team": "Team",
+    "about.our.mission": "Our Mission",
+    "about.our.values": "Our Values",
+    "about.our.team": "Our Team",
+    "about.contact.us": "Contact Us",
     
     // Misc
     "currency": "ALL",
