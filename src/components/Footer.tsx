@@ -2,6 +2,7 @@
 import React from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { ExternalLink } from 'lucide-react';
+import { dataSources } from '../data/propertyData';
 
 const Footer: React.FC = () => {
   const { t } = useLanguage();
