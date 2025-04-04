@@ -30,7 +30,7 @@ const WebCrawlerList: React.FC = () => {
   return (
     <Card className="w-full">
       <CardHeader>
-        <CardTitle>{t('crawler.title')}</CardTitle>
+        <CardTitle>{t('about.data.sources')}</CardTitle>
       </CardHeader>
       <CardContent>
         <Table>

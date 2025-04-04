@@ -6,9 +6,9 @@ import PriceChart from '../components/PriceChart';
 import PropertyTypeChart from '../components/PropertyTypeChart';
 import RegionPriceTable from '../components/RegionPriceTable';
 import WebCrawlerStatus from '../components/WebCrawlerStatus';
+import WebCrawlerList from '../components/WebCrawlerList';
 import { marketStats, dataSources } from '../data/propertyData';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
-import { ExternalLink } from 'lucide-react';
 
 const Dashboard: React.FC = () => {
   const { t } = useLanguage();
@@ -60,28 +60,10 @@ const Dashboard: React.FC = () => {
         <RegionPriceTable title={t('dashboard.price.regions')} />
       </div>
 
-      {/* Data Sources */}
-      <Card>
-        <CardHeader>
-          <CardTitle>{t('about.data.sources')}</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-            {dataSources.map((source, index) => (
-              <a 
-                key={index}
-                href={source.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 p-3 border rounded-md hover:bg-gray-50 transition-colors"
-              >
-                <span className="truncate">{source.name}</span>
-                <ExternalLink size={16} className="flex-shrink-0" />
-              </a>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+      {/* Web Crawlers Section */}
+      <div className="mb-8">
+        <WebCrawlerList />
+      </div>
     </div>
   );
 };
