@@ -1,6 +1,8 @@
 
 import React from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
+import { dataSources } from '../data/propertyData';
+import { ExternalLink } from 'lucide-react';
 
 const Footer: React.FC = () => {
   const { t } = useLanguage();
@@ -17,22 +19,22 @@ const Footer: React.FC = () => {
             </p>
           </div>
           
-          <div>
+          <div className="col-span-1 md:col-span-2">
             <h3 className="text-lg font-semibold mb-4">{t('about.data.sources')}</h3>
-            <ul className="space-y-2 text-gray-300 text-sm">
-              <li>merrjep.al</li>
-              <li>prona.al</li>
-              <li>century21.al</li>
-              <li>remax.al</li>
-              <li>propertiesalbania.al</li>
-            </ul>
-          </div>
-          
-          <div>
-            <h3 className="text-lg font-semibold mb-4">{t('about.disclaimer')}</h3>
-            <p className="text-gray-300 text-sm">
-              {t('about.disclaimer.text')}
-            </p>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-4 gap-y-2">
+              {dataSources.map((source, index) => (
+                <a 
+                  key={index}
+                  href={source.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-300 text-sm hover:text-white transition-colors flex items-center gap-1"
+                >
+                  {source.name}
+                  <ExternalLink size={12} />
+                </a>
+              ))}
+            </div>
           </div>
         </div>
       </div>

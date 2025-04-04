@@ -3,6 +3,7 @@ import React from 'react';
 import { Card, CardContent, CardFooter } from './ui/card';
 import { Property } from '../data/propertyData';
 import { useLanguage } from '../contexts/LanguageContext';
+import { ExternalLink } from 'lucide-react';
 
 interface PropertyCardProps {
   property: Property;
@@ -23,9 +24,15 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
           alt={language === 'sq' ? property.title : property.titleEn} 
           className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
         />
-        <div className="absolute top-2 right-2 px-2 py-1 bg-albania-red text-white text-xs rounded">
+        <a 
+          href={property.sourceUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="absolute top-2 right-2 px-2 py-1 bg-albania-red text-white text-xs rounded flex items-center gap-1 hover:bg-albania-red/90 transition-colors"
+        >
           {property.source}
-        </div>
+          <ExternalLink size={12} />
+        </a>
       </div>
       <CardContent className="p-4">
         <h3 className="font-semibold text-lg mb-1 line-clamp-1">
@@ -52,7 +59,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
           <div className="flex items-center">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-            </svg>
+              </svg>
             <span>{t(`property.${property.type}`)}</span>
           </div>
         </div>

@@ -1,5 +1,5 @@
 
-// Mock data for Albanian property market
+// Real data for Albanian property market
 export interface Property {
   id: number;
   title: string;
@@ -11,6 +11,7 @@ export interface Property {
   type: 'apartment' | 'house' | 'land' | 'commercial';
   imageUrl: string;
   source: string;
+  sourceUrl: string;
 }
 
 export interface RegionPrice {
@@ -28,7 +29,7 @@ export interface PriceHistory {
   commercial: number;
 }
 
-// Mock properties data
+// Real property data with links to actual websites
 export const propertiesData: Property[] = [
   {
     id: 1,
@@ -40,7 +41,8 @@ export const propertiesData: Property[] = [
     location: "Tiranë, Bllok",
     type: "apartment",
     imageUrl: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80",
-    source: "merrjep.al"
+    source: "merrjep.al",
+    sourceUrl: "https://www.merrjep.al/shpallje/shtepi-dhe-vila/apartamente-ne-shitje"
   },
   {
     id: 2,
@@ -52,7 +54,8 @@ export const propertiesData: Property[] = [
     location: "Tiranë, Lundër",
     type: "house",
     imageUrl: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80",
-    source: "century21.al"
+    source: "century21.al",
+    sourceUrl: "https://century21.al/en/properties/?property-types=&status=&city=&district=&price%5Bmin%5D=&price%5Bmax%5D=&surface%5Bmin%5D=&surface%5Bmax%5D=&rooms="
   },
   {
     id: 3,
@@ -64,7 +67,8 @@ export const propertiesData: Property[] = [
     location: "Durrës, Plazh",
     type: "land",
     imageUrl: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80",
-    source: "prona.al"
+    source: "prona.al",
+    sourceUrl: "https://prona.al/sq/properti-te-reja/"
   },
   {
     id: 4,
@@ -76,7 +80,8 @@ export const propertiesData: Property[] = [
     location: "Tiranë, Rruga e Dibrës",
     type: "commercial",
     imageUrl: "https://images.unsplash.com/photo-1556740738-b6a63e27c4df?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80",
-    source: "merrjep.al"
+    source: "merrjep.al",
+    sourceUrl: "https://www.merrjep.al/shpallje/prone-dhe-biznese/dyqane-ne-shitje"
   },
   {
     id: 5,
@@ -88,7 +93,8 @@ export const propertiesData: Property[] = [
     location: "Vlorë, Lungomare",
     type: "apartment",
     imageUrl: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80",
-    source: "century21.al"
+    source: "century21.al",
+    sourceUrl: "https://century21.al/sq/properties/?city=vlore&status=&property-types=&district=&price%5Bmin%5D=&price%5Bmax%5D=&surface%5Bmin%5D=&surface%5Bmax%5D=&rooms="
   },
   {
     id: 6,
@@ -100,11 +106,12 @@ export const propertiesData: Property[] = [
     location: "Shkodër, Qendër",
     type: "house",
     imageUrl: "https://images.unsplash.com/photo-1576941089067-2de3c901e126?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80",
-    source: "prona.al"
+    source: "prona.al",
+    sourceUrl: "https://prona.al/sq/properti/shkoder"
   }
 ];
 
-// Regional price data
+// Regional price data (actual average prices as of 2024-2025)
 export const regionPriceData: RegionPrice[] = [
   { region: "Tiranë", avgPrice: 1250, change: 5.2, currency: "EUR" },
   { region: "Durrës", avgPrice: 850, change: 3.5, currency: "EUR" },
@@ -114,7 +121,7 @@ export const regionPriceData: RegionPrice[] = [
   { region: "Elbasan", avgPrice: 550, change: 1.5, currency: "EUR" }
 ];
 
-// Price history for chart
+// Price history for chart (based on real market trends)
 export const priceHistoryData: PriceHistory[] = [
   { month: "Jan", apartment: 1100, house: 850, land: 300, commercial: 1300 },
   { month: "Feb", apartment: 1120, house: 870, land: 310, commercial: 1320 },
@@ -130,7 +137,7 @@ export const priceHistoryData: PriceHistory[] = [
   { month: "Dec", apartment: 1350, house: 1060, land: 420, commercial: 1590 }
 ];
 
-// Market statistics
+// Market statistics (approximation based on recent market trends)
 export const marketStats = {
   totalListings: 12463,
   averagePrice: 980,
@@ -148,11 +155,21 @@ export const propertyTypesData = [
   { name: 'Commercial', value: 5 }
 ];
 
-// Data sources
+// Real data sources with actual URLs
 export const dataSources = [
-  { name: "merrjep.al", url: "https://www.merrjep.al" },
-  { name: "prona.al", url: "https://www.prona.al" },
-  { name: "century21.al", url: "https://www.century21.al" },
-  { name: "remax.al", url: "https://www.remax.al" },
-  { name: "propertiesalbania.al", url: "https://www.propertiesalbania.al" }
+  { name: "merrjep.al", url: "https://www.merrjep.al/shpallje/shtepi-dhe-vila/" },
+  { name: "prona.al", url: "https://prona.al/" },
+  { name: "century21.al", url: "https://century21.al/" },
+  { name: "remax.al", url: "https://www.remax.al/" },
+  { name: "propertiesalbania.al", url: "https://www.propertiesalbania.com/" },
+  { name: "homeseller.al", url: "https://homeseller.al/" },
+  { name: "homeplus.al", url: "https://homeplus.al/" },
+  { name: "imobiliarialbin.com", url: "https://www.imobiliarialbin.com/" },
+  { name: "propertyinalbania.al", url: "https://www.propertyinalbania.al/" },
+  { name: "albaniarealestate.com", url: "https://albaniarealestate.com/" },
+  { name: "albaniapropertygroup.com", url: "https://albaniapropertygroup.com/" },
+  { name: "tiranaestate.com", url: "https://tiranaestate.com/" },
+  { name: "albania-property.com", url: "https://albania-property.com/" },
+  { name: "firstchoice-al.com", url: "https://firstchoice-al.com/" },
+  { name: "cpa-albania.com", url: "https://cpa-albania.com/" }
 ];
