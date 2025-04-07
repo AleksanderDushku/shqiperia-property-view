@@ -3,55 +3,59 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from './ui/card';
 import { Badge } from './ui/badge';
 import { Button } from './ui/button';
-import { Calendar, ExternalLink } from 'lucide-react';
+import { Calendar, ExternalLink, TrendingUp, Building, Briefcase } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useIsMobile } from '../hooks/use-mobile';
 
-// Sample market news data
+// Updated market news data with professional focus
 const marketNewsData = [
   {
     id: 1,
-    title: "Çmimet e pronave në Tiranë vazhdojnë rritjen në tremujorin e dytë",
-    titleEn: "Property prices in Tirana continue to rise in the second quarter",
+    title: "Çmimet e pronave në Tiranë vazhdojnë rritjen, duke krijuar mundësi për zhvilluesit",
+    titleEn: "Property prices in Tirana continue to rise, creating opportunities for developers",
     date: "2025-04-02",
     category: "market-trends",
-    summary: "Sipas të dhënave më të fundit, çmimet e apartamenteve në kryeqytet janë rritur me 5.2% krahasuar me të njëjtën periudhë të vitit të kaluar.",
-    summaryEn: "According to the latest data, apartment prices in the capital have increased by 5.2% compared to the same period last year.",
+    summary: "Rritja e çmimeve me 5.2% ofron mundësi për zhvilluesit e ndërtimit në zonat me rritje të lartë, veçanërisht në lagjet periferike me infrastrukturë të re.",
+    summaryEn: "The 5.2% price increase offers opportunities for developers in high-growth areas, particularly in peripheral neighborhoods with new infrastructure.",
     source: "Monitor.al",
-    url: "https://www.monitor.al"
+    url: "https://www.monitor.al",
+    icon: <TrendingUp className="h-5 w-5" />
   },
   {
     id: 2,
-    title: "Investitorët e huaj tregojnë interes të shtuar për pronat në bregdet",
-    titleEn: "Foreign investors show increased interest in coastal properties",
+    title: "Investitorët e huaj fokusohen në pronat në bregdet, duke rritur potencialin për zhvillim",
+    titleEn: "Foreign investors focus on coastal properties, increasing development potential",
     date: "2025-03-28",
     category: "investment",
-    summary: "Investitorët nga Europa Perëndimore dhe Lindja e Mesme po blejnë gjithnjë e më shumë prona në Sarandë dhe Vlorë, duke rritur çmimet në këto zona.",
-    summaryEn: "Investors from Western Europe and the Middle East are buying more and more properties in Saranda and Vlora, driving up prices in these areas.",
+    summary: "Analizat e tregut tregojnë që investitorët nga Europa dhe Lindja e Mesme po krijojnë mundësi për projekte të përbashkëta zhvillimi në Sarandë dhe Vlorë.",
+    summaryEn: "Market analyses show that investors from Europe and the Middle East are creating opportunities for joint development projects in Saranda and Vlora.",
     source: "Exit.al",
-    url: "https://exit.al"
+    url: "https://exit.al",
+    icon: <Briefcase className="h-5 w-5" />
   },
   {
     id: 3,
-    title: "Normat e interesit për kreditë hipotekare pritet të rriten",
-    titleEn: "Mortgage interest rates expected to rise",
+    title: "Ndryshimet në normat e interesit kërkojnë strategji të reja financimi për zhvilluesit",
+    titleEn: "Interest rate changes require new financing strategies for developers",
     date: "2025-03-25",
     category: "finance",
-    summary: "Banka e Shqipërisë sinjalizon se normat e interesit për kreditë hipotekare mund të rriten me 0.5% deri në fund të vitit 2025.",
-    summaryEn: "The Bank of Albania signals that mortgage interest rates may rise by 0.5% by the end of 2025.",
+    summary: "Specialistët e financave rekomandojnë strukturim inovativ të financimit të projekteve në përgjigje të ndryshimeve të pritshme në normat e interesit nga Banka e Shqipërisë.",
+    summaryEn: "Finance specialists recommend innovative project financing structuring in response to expected interest rate changes from the Bank of Albania.",
     source: "Top-Channel.tv",
-    url: "https://top-channel.tv"
+    url: "https://top-channel.tv",
+    icon: <TrendingUp className="h-5 w-5" />
   },
   {
     id: 4,
-    title: "Ndërtimi i rezidencave të reja në Tiranë shënon rritje rekord",
-    titleEn: "Construction of new residences in Tirana marks record growth",
+    title: "Teknologjia po transformon procesin e zhvillimit të pronave në Tiranë",
+    titleEn: "Technology is transforming the property development process in Tirana",
     date: "2025-03-20",
-    category: "construction",
-    summary: "Lejet e ndërtimit për projekte të reja rezidenciale në Tiranë janë rritur me 25% në vitin 2025, kryesisht në zonat Kombinat dhe Astir.",
-    summaryEn: "Building permits for new residential projects in Tirana have increased by 25% in 2025, mainly in the Kombinat and Astir areas.",
+    category: "technology",
+    summary: "Adoptimi i BIM (Building Information Modeling) dhe teknologjive të tjera digjitale po përmirëson efikasitetin e projekteve dhe po ul kostot e zhvillimit me 15-20%.",
+    summaryEn: "The adoption of BIM (Building Information Modeling) and other digital technologies is improving project efficiency and reducing development costs by 15-20%.",
     source: "BalkanInsight.com",
-    url: "https://balkaninsight.com"
+    url: "https://balkaninsight.com",
+    icon: <Building className="h-5 w-5" />
   }
 ];
 
@@ -60,6 +64,7 @@ const categoryColors: {[key: string]: string} = {
   'investment': 'bg-green-100 text-green-800',
   'finance': 'bg-amber-100 text-amber-800',
   'construction': 'bg-purple-100 text-purple-800',
+  'technology': 'bg-indigo-100 text-indigo-800',
   'policy': 'bg-red-100 text-red-800'
 };
 
@@ -82,6 +87,7 @@ const MarketNews: React.FC = () => {
       'investment': {sq: 'Investime', en: 'Investment'},
       'finance': {sq: 'Financë', en: 'Finance'},
       'construction': {sq: 'Ndërtim', en: 'Construction'},
+      'technology': {sq: 'Teknologji', en: 'Technology'},
       'policy': {sq: 'Politikë', en: 'Policy'}
     };
     
@@ -92,18 +98,20 @@ const MarketNews: React.FC = () => {
     <Card className="w-full">
       <CardHeader>
         <CardTitle className="flex items-center text-base md:text-lg">
-          <Calendar className="mr-2 h-5 w-5 text-albania-red" />
-          {t('market.news')}
+          <Briefcase className="mr-2 h-5 w-5 text-albania-red" />
+          {t('market.news')} 
+          <span className="ml-2 text-sm text-gray-500">- {t('market.insights')}</span>
         </CardTitle>
       </CardHeader>
       <CardContent>
         <div className="grid gap-4 md:gap-6 grid-cols-1 md:grid-cols-2">
           {marketNewsData.map((news) => (
-            <Card key={news.id} className="overflow-hidden hover:shadow-md transition-shadow">
+            <Card key={news.id} className="overflow-hidden hover:shadow-md transition-shadow border-l-2 border-l-albania-red">
               <CardContent className="p-0">
                 <div className="p-3 md:p-4">
                   <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2 mb-2">
-                    <Badge className={`${categoryColors[news.category]} border-0 self-start`}>
+                    <Badge className={`${categoryColors[news.category]} border-0 self-start flex items-center`}>
+                      {news.icon && <span className="mr-1">{news.icon}</span>}
                       {getCategoryName(news.category)}
                     </Badge>
                     <span className="text-xs text-gray-500 flex items-center self-start">

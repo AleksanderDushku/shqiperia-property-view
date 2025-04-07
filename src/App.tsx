@@ -13,7 +13,16 @@ import Analysis from "./pages/Analysis";
 import About from "./pages/About";
 import NotFound from "./pages/NotFound";
 
-const queryClient = new QueryClient();
+// Create a client with professional configuration
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 5, // 5 minutes - optimized for real estate data refresh rates
+      retry: 3,
+      refetchOnWindowFocus: false, // Better for focus on detailed real estate analysis
+    },
+  },
+});
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
