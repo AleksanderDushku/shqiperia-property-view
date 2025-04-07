@@ -5,6 +5,7 @@ import { Badge } from './ui/badge';
 import { Button } from './ui/button';
 import { Calendar, ExternalLink } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
+import { useIsMobile } from '../hooks/use-mobile';
 
 // Sample market news data
 const marketNewsData = [
@@ -64,6 +65,7 @@ const categoryColors: {[key: string]: string} = {
 
 const MarketNews: React.FC = () => {
   const { t, language } = useLanguage();
+  const isMobile = useIsMobile();
   
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -89,38 +91,38 @@ const MarketNews: React.FC = () => {
   return (
     <Card className="w-full">
       <CardHeader>
-        <CardTitle className="flex items-center">
+        <CardTitle className="flex items-center text-base md:text-lg">
           <Calendar className="mr-2 h-5 w-5 text-albania-red" />
           {t('market.news')}
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="grid gap-6 md:grid-cols-2">
+        <div className="grid gap-4 md:gap-6 grid-cols-1 md:grid-cols-2">
           {marketNewsData.map((news) => (
             <Card key={news.id} className="overflow-hidden hover:shadow-md transition-shadow">
               <CardContent className="p-0">
-                <div className="p-4">
-                  <div className="flex justify-between items-start mb-2">
-                    <Badge className={`${categoryColors[news.category]} border-0`}>
+                <div className="p-3 md:p-4">
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2 mb-2">
+                    <Badge className={`${categoryColors[news.category]} border-0 self-start`}>
                       {getCategoryName(news.category)}
                     </Badge>
-                    <span className="text-xs text-gray-500 flex items-center">
+                    <span className="text-xs text-gray-500 flex items-center self-start">
                       <Calendar className="h-3 w-3 mr-1" />
                       {formatDate(news.date)}
                     </span>
                   </div>
-                  <h3 className="font-semibold text-lg mb-2">
+                  <h3 className="font-semibold text-base md:text-lg mb-2">
                     {language === 'sq' ? news.title : news.titleEn}
                   </h3>
-                  <p className="text-gray-600 text-sm">
+                  <p className="text-gray-600 text-xs md:text-sm">
                     {language === 'sq' ? news.summary : news.summaryEn}
                   </p>
                 </div>
               </CardContent>
-              <CardFooter className="px-4 py-3 bg-gray-50 flex justify-between items-center">
+              <CardFooter className="px-3 md:px-4 py-2 md:py-3 bg-gray-50 flex flex-wrap justify-between items-center">
                 <span className="text-xs text-gray-500">{t('source')}: {news.source}</span>
-                <Button size="sm" variant="outline" className="h-8" asChild>
-                  <a href={news.url} target="_blank" rel="noopener noreferrer" className="flex items-center">
+                <Button size={isMobile ? "sm" : "sm"} variant="outline" className="h-7 md:h-8 mt-1 sm:mt-0" asChild>
+                  <a href={news.url} target="_blank" rel="noopener noreferrer" className="flex items-center text-xs md:text-sm">
                     {t('read.more')}
                     <ExternalLink className="ml-1 h-3 w-3" />
                   </a>

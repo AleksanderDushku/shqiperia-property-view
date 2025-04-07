@@ -10,19 +10,21 @@ import WebCrawlerList from '../components/WebCrawlerList';
 import { marketStats, dataSources } from '../data/propertyData';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
 import { BarChart, Home, TrendingUp, Building } from 'lucide-react';
+import { useIsMobile } from '../hooks/use-mobile';
 
 const Dashboard: React.FC = () => {
   const { t } = useLanguage();
+  const isMobile = useIsMobile();
   
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold mb-2">{t('dashboard.title')}</h1>
-        <p className="text-gray-600">{t('dashboard.subtitle')}</p>
+    <div className="container mx-auto px-3 py-6">
+      <div className="mb-6">
+        <h1 className={`${isMobile ? 'text-2xl' : 'text-3xl'} font-bold mb-2`}>{t('dashboard.title')}</h1>
+        <p className="text-gray-600 text-sm md:text-base">{t('dashboard.subtitle')}</p>
       </div>
       
       {/* Stats cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6 mb-6">
         <StatCard 
           title={t('dashboard.avg.price')}
           value={`${marketStats.averagePrice} €`}
@@ -54,10 +56,10 @@ const Dashboard: React.FC = () => {
       </div>
       
       {/* Charts */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 mb-6">
         <Card className="overflow-hidden hover:shadow-lg transition-all duration-300">
           <CardHeader className="pb-2">
-            <CardTitle className="flex items-center gap-2">
+            <CardTitle className="flex items-center gap-2 text-base md:text-lg">
               <BarChart className="h-5 w-5 text-albania-red" />
               {t('dashboard.price.trends')}
             </CardTitle>
@@ -69,7 +71,7 @@ const Dashboard: React.FC = () => {
         
         <Card className="overflow-hidden hover:shadow-lg transition-all duration-300">
           <CardHeader className="pb-2">
-            <CardTitle className="flex items-center gap-2">
+            <CardTitle className="flex items-center gap-2 text-base md:text-lg">
               <BarChart className="h-5 w-5 text-albania-red" />
               {t('property.types')}
             </CardTitle>
@@ -81,22 +83,22 @@ const Dashboard: React.FC = () => {
       </div>
       
       {/* Table */}
-      <div className="mb-8">
+      <div className="mb-6">
         <Card className="overflow-hidden hover:shadow-lg transition-all duration-300">
           <CardHeader className="pb-2">
-            <CardTitle className="flex items-center gap-2">
+            <CardTitle className="flex items-center gap-2 text-base md:text-lg">
               <TrendingUp className="h-5 w-5 text-albania-red" />
               {t('dashboard.price.regions')}
             </CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="overflow-x-auto">
             <RegionPriceTable title="" />
           </CardContent>
         </Card>
       </div>
 
       {/* Web Crawlers Section */}
-      <div className="mb-8">
+      <div className="mb-6">
         <WebCrawlerList />
       </div>
     </div>
