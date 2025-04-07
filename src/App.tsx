@@ -9,7 +9,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Index from "./pages/Index";
 import Market from "./pages/Market";
-import Properties from "./pages/Properties";
+import Analysis from "./pages/Analysis";
 import About from "./pages/About";
 import NotFound from "./pages/NotFound";
 
@@ -28,7 +28,7 @@ const App = () => (
               <Routes>
                 <Route path="/" element={<Index />} />
                 <Route path="/market" element={<Market />} />
-                <Route path="/properties" element={<Properties />} />
+                <Route path="/analysis" element={<Analysis />} />
                 <Route path="/about" element={<About />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>

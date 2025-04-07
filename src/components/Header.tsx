@@ -50,12 +50,12 @@ const Header: React.FC = () => {
             {t('nav.market')}
           </Link>
           <Link 
-            to="/properties" 
-            className={`transition-colors ${isActive('/properties') 
+            to="/analysis" 
+            className={`transition-colors ${isActive('/analysis') 
               ? 'text-albania-red font-medium' 
               : 'text-gray-700 hover:text-albania-red'}`}
           >
-            {t('nav.properties')}
+            {t('nav.analysis')}
           </Link>
           <Link 
             to="/about" 
@@ -111,13 +111,13 @@ const Header: React.FC = () => {
               {t('nav.market')}
             </Link>
             <Link 
-              to="/properties" 
-              className={`transition-colors ${isActive('/properties') 
+              to="/analysis" 
+              className={`transition-colors ${isActive('/analysis') 
                 ? 'text-albania-red font-medium' 
                 : 'text-gray-700'}`}
               onClick={toggleMobileMenu}
             >
-              {t('nav.properties')}
+              {t('nav.analysis')}
             </Link>
             <Link 
               to="/about" 
