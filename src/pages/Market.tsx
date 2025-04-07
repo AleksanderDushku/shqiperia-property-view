@@ -4,8 +4,11 @@ import { useLanguage } from '../contexts/LanguageContext';
 import PriceChart from '../components/PriceChart';
 import RegionPriceTable from '../components/RegionPriceTable';
 import PropertyTypeChart from '../components/PropertyTypeChart';
+import MarketInsights from '../components/MarketInsights';
+import MarketNews from '../components/MarketNews';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
 
 const quarterlyData = [
   { quarter: 'Q1 2024', supply: 1245, demand: 1520 },
@@ -25,49 +28,77 @@ const Market: React.FC = () => {
         <p className="text-gray-600">{t('market.subtitle')}</p>
       </div>
       
-      {/* Price Evolution */}
-      <div className="mb-8">
-        <PriceChart title={t('market.price.evolution')} />
-      </div>
-      
-      {/* Supply and Demand */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-        <Card className="w-full">
-          <CardHeader>
-            <CardTitle>{t('market.supply.demand')}</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="h-[300px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart
-                  data={quarterlyData}
-                  margin={{
-                    top: 5,
-                    right: 30,
-                    left: 20,
-                    bottom: 5,
-                  }}
-                >
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="quarter" />
-                  <YAxis />
-                  <Tooltip />
-                  <Legend />
-                  <Bar dataKey="supply" name="Oferta" fill="#000000" />
-                  <Bar dataKey="demand" name="Kërkesa" fill="#E41E20" />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-          </CardContent>
-        </Card>
+      <Tabs defaultValue="overview" className="w-full mb-8">
+        <TabsList className="mb-6 bg-albania-gray">
+          <TabsTrigger value="overview" className="data-[state=active]:bg-albania-red data-[state=active]:text-white">
+            {t('market.overview')}
+          </TabsTrigger>
+          <TabsTrigger value="trends" className="data-[state=active]:bg-albania-red data-[state=active]:text-white">
+            {t('market.trends')}
+          </TabsTrigger>
+          <TabsTrigger value="news" className="data-[state=active]:bg-albania-red data-[state=active]:text-white">
+            {t('market.news')}
+          </TabsTrigger>
+        </TabsList>
         
-        <PropertyTypeChart title={t('property.distribution')} />
-      </div>
-      
-      {/* Regional Prices */}
-      <div className="mb-8">
-        <RegionPriceTable title={t('market.quarterly.change')} />
-      </div>
+        <TabsContent value="overview">
+          {/* Price Evolution */}
+          <div className="mb-8">
+            <PriceChart title={t('market.price.evolution')} />
+          </div>
+          
+          {/* Supply and Demand */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+            <Card className="w-full">
+              <CardHeader>
+                <CardTitle>{t('market.supply.demand')}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="h-[300px]">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <BarChart
+                      data={quarterlyData}
+                      margin={{
+                        top: 5,
+                        right: 30,
+                        left: 20,
+                        bottom: 5,
+                      }}
+                    >
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis dataKey="quarter" />
+                      <YAxis />
+                      <Tooltip />
+                      <Legend />
+                      <Bar dataKey="supply" name="Oferta" fill="#000000" />
+                      <Bar dataKey="demand" name="Kërkesa" fill="#E41E20" />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
+              </CardContent>
+            </Card>
+            
+            <PropertyTypeChart title={t('property.distribution')} />
+          </div>
+          
+          {/* Regional Prices */}
+          <div className="mb-8">
+            <RegionPriceTable title={t('market.quarterly.change')} />
+          </div>
+        </TabsContent>
+        
+        <TabsContent value="trends">
+          <div className="mb-8">
+            <MarketInsights />
+          </div>
+        </TabsContent>
+        
+        <TabsContent value="news">
+          <div className="mb-8">
+            <MarketNews />
+          </div>
+        </TabsContent>
+      </Tabs>
     </div>
   );
 };
