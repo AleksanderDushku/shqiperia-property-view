@@ -3,7 +3,7 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 import { Button } from './ui/button';
-import { Globe, Menu, X } from 'lucide-react';
+import { Globe, Menu, X, Home, BarChart2, TrendingUp, Info } from 'lucide-react';
 
 const Header: React.FC = () => {
   const { language, setLanguage, t } = useLanguage();
@@ -35,44 +35,48 @@ const Header: React.FC = () => {
         <nav className="hidden md:flex space-x-6">
           <Link 
             to="/" 
-            className={`transition-colors ${isActive('/') 
+            className={`transition-colors flex items-center gap-1 ${isActive('/') 
               ? 'text-albania-red font-medium' 
               : 'text-gray-700 hover:text-albania-red'}`}
           >
-            {t('nav.dashboard')}
+            <Home className="h-4 w-4" />
+            <span>{t('nav.dashboard')}</span>
           </Link>
           <Link 
             to="/market" 
-            className={`transition-colors ${isActive('/market') 
+            className={`transition-colors flex items-center gap-1 ${isActive('/market') 
               ? 'text-albania-red font-medium' 
               : 'text-gray-700 hover:text-albania-red'}`}
           >
-            {t('nav.market')}
+            <BarChart2 className="h-4 w-4" />
+            <span>{t('nav.market')}</span>
           </Link>
           <Link 
             to="/analysis" 
-            className={`transition-colors ${isActive('/analysis') 
+            className={`transition-colors flex items-center gap-1 ${isActive('/analysis') 
               ? 'text-albania-red font-medium' 
               : 'text-gray-700 hover:text-albania-red'}`}
           >
-            {t('nav.analysis')}
+            <TrendingUp className="h-4 w-4" />
+            <span>{t('nav.analysis')}</span>
           </Link>
           <Link 
             to="/about" 
-            className={`transition-colors ${isActive('/about') 
+            className={`transition-colors flex items-center gap-1 ${isActive('/about') 
               ? 'text-albania-red font-medium' 
               : 'text-gray-700 hover:text-albania-red'}`}
           >
-            {t('nav.about')}
+            <Info className="h-4 w-4" />
+            <span>{t('nav.about')}</span>
           </Link>
         </nav>
         
         <div className="flex items-center space-x-4">
           <Button 
-            variant="ghost" 
+            variant="outline" 
             size="sm" 
             onClick={toggleLanguage}
-            className="flex items-center space-x-1"
+            className="flex items-center space-x-1 bg-white hover:bg-gray-50"
           >
             <Globe className="h-4 w-4" />
             <span>{language === 'sq' ? 'EN' : 'SQ'}</span>
@@ -90,42 +94,46 @@ const Header: React.FC = () => {
       
       {/* Mobile menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-white py-4 px-4 shadow-lg">
+        <div className="md:hidden bg-white py-4 px-4 shadow-lg animate-fade-in">
           <nav className="flex flex-col space-y-4">
             <Link 
               to="/" 
-              className={`transition-colors ${isActive('/') 
-                ? 'text-albania-red font-medium' 
-                : 'text-gray-700'}`}
+              className={`transition-colors flex items-center gap-2 p-2 rounded-md ${isActive('/') 
+                ? 'text-albania-red font-medium bg-red-50' 
+                : 'text-gray-700 hover:bg-gray-50'}`}
               onClick={toggleMobileMenu}
             >
+              <Home className="h-5 w-5" />
               {t('nav.dashboard')}
             </Link>
             <Link 
               to="/market" 
-              className={`transition-colors ${isActive('/market') 
-                ? 'text-albania-red font-medium' 
-                : 'text-gray-700'}`}
+              className={`transition-colors flex items-center gap-2 p-2 rounded-md ${isActive('/market') 
+                ? 'text-albania-red font-medium bg-red-50' 
+                : 'text-gray-700 hover:bg-gray-50'}`}
               onClick={toggleMobileMenu}
             >
+              <BarChart2 className="h-5 w-5" />
               {t('nav.market')}
             </Link>
             <Link 
               to="/analysis" 
-              className={`transition-colors ${isActive('/analysis') 
-                ? 'text-albania-red font-medium' 
-                : 'text-gray-700'}`}
+              className={`transition-colors flex items-center gap-2 p-2 rounded-md ${isActive('/analysis') 
+                ? 'text-albania-red font-medium bg-red-50' 
+                : 'text-gray-700 hover:bg-gray-50'}`}
               onClick={toggleMobileMenu}
             >
+              <TrendingUp className="h-5 w-5" />
               {t('nav.analysis')}
             </Link>
             <Link 
               to="/about" 
-              className={`transition-colors ${isActive('/about') 
-                ? 'text-albania-red font-medium' 
-                : 'text-gray-700'}`}
+              className={`transition-colors flex items-center gap-2 p-2 rounded-md ${isActive('/about') 
+                ? 'text-albania-red font-medium bg-red-50' 
+                : 'text-gray-700 hover:bg-gray-50'}`}
               onClick={toggleMobileMenu}
             >
+              <Info className="h-5 w-5" />
               {t('nav.about')}
             </Link>
           </nav>
