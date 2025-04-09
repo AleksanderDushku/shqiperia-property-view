@@ -1,53 +1,43 @@
 
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { LanguageProvider } from "./contexts/LanguageContext";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Index from "./pages/Index";
-import Market from "./pages/Market";
-import Analysis from "./pages/Analysis";
 import About from "./pages/About";
+import Market from "./pages/Market";
+import Properties from "./pages/Properties";
+import Analysis from "./pages/Analysis";
 import NotFound from "./pages/NotFound";
+import Calculator from "./pages/Calculator";
+import Neighborhoods from "./pages/Neighborhoods";
+import { LanguageProvider } from "./contexts/LanguageContext";
+import "./App.css";
+import { Toaster } from "./components/ui/toaster";
 
-// Create a client with professional configuration
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: 1000 * 60 * 5, // 5 minutes - optimized for real estate data refresh rates
-      retry: 3,
-      refetchOnWindowFocus: false, // Better for focus on detailed real estate analysis
-    },
-  },
-});
-
-const App = () => (
-  <QueryClientProvider client={queryClient}>
+function App() {
+  return (
     <LanguageProvider>
-      <TooltipProvider>
+      <Router>
+        <div className="flex flex-col min-h-screen">
+          <Header />
+          <main className="flex-grow py-4">
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/market" element={<Market />} />
+              <Route path="/properties" element={<Properties />} />
+              <Route path="/analysis" element={<Analysis />} />
+              <Route path="/calculator" element={<Calculator />} />
+              <Route path="/neighborhoods" element={<Neighborhoods />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </main>
+          <Footer />
+        </div>
         <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <div className="min-h-screen flex flex-col">
-            <Header />
-            <main className="flex-grow">
-              <Routes>
-                <Route path="/" element={<Index />} />
-                <Route path="/market" element={<Market />} />
-                <Route path="/analysis" element={<Analysis />} />
-                <Route path="/about" element={<About />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </main>
-            <Footer />
-          </div>
-        </BrowserRouter>
-      </TooltipProvider>
+      </Router>
     </LanguageProvider>
-  </QueryClientProvider>
-);
+  );
+}
 
 export default App;
