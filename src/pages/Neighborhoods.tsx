@@ -146,7 +146,7 @@ const NeighborhoodsPage: React.FC = () => {
   const { t } = useLanguage();
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [filteredNeighborhoods, setFilteredNeighborhoods] = useState(neighborhoodsData);
-  const [priceSort, setPriceSort] = useState<string>('');
+  const [priceSort, setPriceSort] = useState<string>('default');
   const [selectedCity, setSelectedCity] = useState<string>('tirane');
   
   const handleSearch = () => {
@@ -217,7 +217,7 @@ const NeighborhoodsPage: React.FC = () => {
                 <SelectValue placeholder={t('Rendit sipas...')} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">{t('Parazgjedhur')}</SelectItem>
+                <SelectItem value="default">{t('Parazgjedhur')}</SelectItem>
                 <SelectItem value="low-high">{t('Çmimi: I ulët në të lartë')}</SelectItem>
                 <SelectItem value="high-low">{t('Çmimi: I lartë në të ulët')}</SelectItem>
                 <SelectItem value="growth">{t('Rritja më e lartë')}</SelectItem>
