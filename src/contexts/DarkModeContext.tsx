@@ -10,6 +10,7 @@ const DarkModeContext = createContext<DarkModeContextType | undefined>(undefined
 
 export function DarkModeProvider({ children }: { children: React.ReactNode }) {
   const [dark_mode, set_dark_mode] = useState<boolean>(false);
+  const [mounted, set_mounted] = useState<boolean>(false);
 
   useEffect(() => {
     // Check if user previously enabled dark mode
@@ -22,9 +23,13 @@ export function DarkModeProvider({ children }: { children: React.ReactNode }) {
     } else {
       set_dark_mode(prefer_dark);
     }
+    
+    set_mounted(true);
   }, []);
 
   useEffect(() => {
+    if (!mounted) return;
+    
     // Update document class when dark mode changes
     if (dark_mode) {
       document.documentElement.classList.add('dark');
@@ -34,7 +39,17 @@ export function DarkModeProvider({ children }: { children: React.ReactNode }) {
     
     // Store preference
     localStorage.setItem('dark_mode', dark_mode.toString());
-  }, [dark_mode]);
+    
+    // Add transition class for smoother color changes
+    document.documentElement.classList.add('color-theme-in-transition');
+    
+    // Remove the transition class after transitions complete to avoid transition effects when not needed
+    const timeout = setTimeout(() => {
+      document.documentElement.classList.remove('color-theme-in-transition');
+    }, 1000);
+    
+    return () => clearTimeout(timeout);
+  }, [dark_mode, mounted]);
 
   const toggle_dark_mode = () => {
     set_dark_mode(!dark_mode);
