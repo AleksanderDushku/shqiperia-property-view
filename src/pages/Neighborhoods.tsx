@@ -7,9 +7,11 @@ import { Button } from '../components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
 import { Search, MapPin, Building, Filter } from 'lucide-react';
+import { NeighborhoodData } from '../types/neighborhood';
+import PropertyMap from '../components/PropertyMap';
 
 // Sample neighborhood data
-const neighborhoodsData = [
+const neighborhoodsData: NeighborhoodData[] = [
   {
     id: "bllok",
     name: "Blloku",
@@ -263,13 +265,10 @@ const NeighborhoodsPage: React.FC = () => {
         </TabsContent>
         
         <TabsContent value="map">
-          <div className="bg-gray-50 p-8 rounded-lg border border-gray-100 text-center">
-            <MapPin className="h-10 w-10 text-albania-red mx-auto mb-4 opacity-70" />
-            <h3 className="text-xl font-semibold mb-2">{t('Duke ardhur së shpejti!')}</h3>
-            <p className="text-gray-600 max-w-md mx-auto">
-              {t('Harta interaktive e lagjeve është në zhvillim e sipër dhe do të jetë e disponueshme së shpejti!')}
-            </p>
-          </div>
+          <PropertyMap
+            neighborhoods={filteredNeighborhoods}
+            selectedCity={selectedCity}
+          />
         </TabsContent>
       </Tabs>
     </div>

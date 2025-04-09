@@ -118,8 +118,8 @@ const SeasonalMarketAnalysis: React.FC = () => {
                       <div className="flex items-center gap-1 mt-1 text-xs">
                         <ArrowUpDown className="h-3 w-3" />
                         <span>
-                          {(((quarter[selectedYear as keyof typeof quarter] as number) / 
-                            (quarter[(parseInt(selectedYear) - 1).toString() as keyof typeof quarter] as number) - 1) * 100).toFixed(1)}%
+                          {(((Number(quarter[selectedYear as keyof typeof quarter])) / 
+                            (Number(quarter[(parseInt(selectedYear) - 1).toString() as keyof typeof quarter])) - 1) * 100).toFixed(1)}%
                         </span>
                       </div>
                     )}
