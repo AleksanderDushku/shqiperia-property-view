@@ -5,7 +5,7 @@ import { ExternalLink } from 'lucide-react';
 import { dataSources } from '../data/propertyData';
 
 const Footer: React.FC = () => {
-  const { t } = useLanguage();
+  const { language } = useLanguage();
   const currentYear = new Date().getFullYear();
 
   return (
@@ -17,15 +17,17 @@ const Footer: React.FC = () => {
               <div className="w-8 h-8 bg-albania-red rounded-md flex items-center justify-center">
                 <span className="text-white font-bold">P</span>
               </div>
-              <span className="font-semibold text-xl text-white">{t('site.title')}</span>
+              <span className="font-semibold text-xl text-white">PronaStats</span>
             </div>
             <p className="text-gray-300 text-sm">
-              © {currentYear} PronaStats - {t('about.disclaimer.text')}
+              © {currentYear} PronaStats - {language === 'sq' 
+                ? 'Të gjitha të dhënat e tregut janë vetëm për qëllime informative' 
+                : 'All market data is for informational purposes only'}
             </p>
           </div>
           
           <div className="col-span-1 md:col-span-2">
-            <h3 className="text-lg font-semibold mb-4">{t('about.data.sources')}</h3>
+            <h3 className="text-lg font-semibold mb-4">{language === 'sq' ? 'Burimet e të Dhënave' : 'Data Sources'}</h3>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-4 gap-y-2">
               {[...new Set(dataSources.map(source => source.name))].slice(0, 15).map((name, index) => {
                 const source = dataSources.find(s => s.name === name);

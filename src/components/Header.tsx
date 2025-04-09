@@ -6,7 +6,7 @@ import { Button } from './ui/button';
 import { Globe, Menu, X, Home, BarChart2, TrendingUp, Info } from 'lucide-react';
 
 const Header: React.FC = () => {
-  const { language, setLanguage, t } = useLanguage();
+  const { language, setLanguage } = useLanguage();
   const location = useLocation();
   const [mobileMenuOpen, set_mobile_menu_open] = React.useState(false);
 
@@ -22,6 +22,14 @@ const Header: React.FC = () => {
     return location.pathname === path;
   };
 
+  // Direct translations based on current language
+  const navLabels = {
+    dashboard: language === 'sq' ? 'Paneli' : 'Dashboard',
+    market: language === 'sq' ? 'Tregu' : 'Market',
+    analysis: language === 'sq' ? 'Analiza' : 'Analysis',
+    about: language === 'sq' ? 'Rreth Nesh' : 'About Us'
+  };
+
   return (
     <header className="bg-white shadow-md py-4 sticky top-0 z-50">
       <div className="container mx-auto px-4 flex justify-between items-center">
@@ -29,7 +37,7 @@ const Header: React.FC = () => {
           <div className="w-10 h-10 bg-albania-red rounded-md flex items-center justify-center">
             <span className="text-white font-bold text-xl">P</span>
           </div>
-          <span className="font-bold text-xl text-gray-900">{t('site.title')}</span>
+          <span className="font-bold text-xl text-gray-900">PronaStats</span>
         </Link>
         
         <nav className="hidden md:flex space-x-6">
@@ -40,7 +48,7 @@ const Header: React.FC = () => {
               : 'text-gray-700 hover:text-albania-red'}`}
           >
             <Home className="h-4 w-4" />
-            <span>{t('nav.dashboard')}</span>
+            <span>{navLabels.dashboard}</span>
           </Link>
           <Link 
             to="/market" 
@@ -49,7 +57,7 @@ const Header: React.FC = () => {
               : 'text-gray-700 hover:text-albania-red'}`}
           >
             <BarChart2 className="h-4 w-4" />
-            <span>{t('nav.market')}</span>
+            <span>{navLabels.market}</span>
           </Link>
           <Link 
             to="/analysis" 
@@ -58,7 +66,7 @@ const Header: React.FC = () => {
               : 'text-gray-700 hover:text-albania-red'}`}
           >
             <TrendingUp className="h-4 w-4" />
-            <span>{t('nav.analysis')}</span>
+            <span>{navLabels.analysis}</span>
           </Link>
           <Link 
             to="/about" 
@@ -67,7 +75,7 @@ const Header: React.FC = () => {
               : 'text-gray-700 hover:text-albania-red'}`}
           >
             <Info className="h-4 w-4" />
-            <span>{t('nav.about')}</span>
+            <span>{navLabels.about}</span>
           </Link>
         </nav>
         
@@ -104,7 +112,7 @@ const Header: React.FC = () => {
               onClick={toggleMobileMenu}
             >
               <Home className="h-5 w-5" />
-              {t('nav.dashboard')}
+              {navLabels.dashboard}
             </Link>
             <Link 
               to="/market" 
@@ -114,7 +122,7 @@ const Header: React.FC = () => {
               onClick={toggleMobileMenu}
             >
               <BarChart2 className="h-5 w-5" />
-              {t('nav.market')}
+              {navLabels.market}
             </Link>
             <Link 
               to="/analysis" 
@@ -124,7 +132,7 @@ const Header: React.FC = () => {
               onClick={toggleMobileMenu}
             >
               <TrendingUp className="h-5 w-5" />
-              {t('nav.analysis')}
+              {navLabels.analysis}
             </Link>
             <Link 
               to="/about" 
@@ -134,7 +142,7 @@ const Header: React.FC = () => {
               onClick={toggleMobileMenu}
             >
               <Info className="h-5 w-5" />
-              {t('nav.about')}
+              {navLabels.about}
             </Link>
           </nav>
         </div>
