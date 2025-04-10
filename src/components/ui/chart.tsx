@@ -1,3 +1,4 @@
+
 import * as React from "react"
 import * as RechartsPrimitive from "recharts"
 
@@ -98,10 +99,9 @@ ${colorConfig
   )
 }
 
-const ChartTooltip = React.forwardRef<
-  HTMLDivElement,
-  React.ComponentProps<typeof RechartsPrimitive.Tooltip>
->((props, ref) => (
+// Fix: Remove the React.forwardRef wrapper since it's causing type incompatibility
+// with the Recharts Tooltip component
+const ChartTooltip = (props: React.ComponentProps<typeof RechartsPrimitive.Tooltip>) => (
   <RechartsPrimitive.Tooltip 
     {...props}
     contentStyle={{
@@ -115,9 +115,8 @@ const ChartTooltip = React.forwardRef<
       outline: 'none',
       ...props.wrapperStyle
     }}
-    ref={ref}
   />
-))
+)
 ChartTooltip.displayName = "ChartTooltip"
 
 const ChartTooltipContent = React.forwardRef<
