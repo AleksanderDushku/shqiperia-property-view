@@ -1,42 +1,94 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+
+/* ... keep existing code */
+
+/* Dark mode transition classes */
+.color-theme-in-transition,
+.color-theme-in-transition *,
+.color-theme-in-transition *:before,
+.color-theme-in-transition *:after {
+  transition: all 0.5s ease-out !important;
+  transition-delay: 0 !important;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+/* Reveal animations */
+.reveal-element {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.7s ease-out;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+.reveal-element.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Dark mode styles */
+.dark {
+  color-scheme: dark;
+}
+
+.dark body {
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+/* Responsive grid adjustments */
+@media (max-width: 768px) {
+  .grid-cols-auto-fill {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   }
-  to {
-    transform: rotate(360deg);
-  }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+/* Enhanced chart styles */
+.recharts-default-tooltip {
+  border-radius: 8px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+  border: 1px solid rgba(0, 0, 0, 0.05) !important;
 }
 
-.card {
-  padding: 2em;
+.dark .recharts-default-tooltip {
+  background-color: #2d2d2d !important;
+  color: #e0e0e0 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
 }
 
-.read-the-docs {
-  color: #888;
+.dark .recharts-tooltip-item-name,
+.dark .recharts-tooltip-item-value {
+  color: #e0e0e0 !important;
+}
+
+/* Card hover effects */
+.card-hover-effect {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-hover-effect:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.dark .card-hover-effect:hover {
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Sleek button hover effects */
+.button-hover-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.button-hover-effect::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+}
+
+.button-hover-effect:hover::after {
+  transform: translateX(0);
 }

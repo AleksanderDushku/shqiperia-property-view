@@ -30,6 +30,9 @@ export function DarkModeProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (!mounted) return;
     
+    // Add transition class before changing theme
+    document.documentElement.classList.add('color-theme-in-transition');
+    
     // Update document class when dark mode changes
     if (dark_mode) {
       document.documentElement.classList.add('dark');
@@ -40,13 +43,10 @@ export function DarkModeProvider({ children }: { children: React.ReactNode }) {
     // Store preference
     localStorage.setItem('dark_mode', dark_mode.toString());
     
-    // Add transition class for smoother color changes
-    document.documentElement.classList.add('color-theme-in-transition');
-    
-    // Remove the transition class after transitions complete to avoid transition effects when not needed
+    // Remove the transition class after transitions complete
     const timeout = setTimeout(() => {
       document.documentElement.classList.remove('color-theme-in-transition');
-    }, 1000);
+    }, 750);
     
     return () => clearTimeout(timeout);
   }, [dark_mode, mounted]);
