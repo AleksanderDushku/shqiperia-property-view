@@ -2,13 +2,15 @@
 import React, { useState } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
-import { BarChart3, TrendingUp, Briefcase, Building } from 'lucide-react';
+import { BarChart3, TrendingUp, Briefcase, Building, MapPin } from 'lucide-react';
 import MarketHeader from '../components/market/MarketHeader';
 import MarketKeyInsights from '../components/market/MarketKeyInsights';
 import OverviewTab from '../components/market/tabs/OverviewTab';
 import TrendsTab from '../components/market/tabs/TrendsTab';
 import InvestmentTab from '../components/market/tabs/InvestmentTab';
 import MarketNews from '../components/MarketNews';
+import RegionalPriceDashboard from '../components/market/RegionalPriceDashboard';
+import AlbanianBanksEnhanced from '../components/AlbanianBanksEnhanced';
 
 const Market: React.FC = () => {
   const { t } = useLanguage();
@@ -27,6 +29,10 @@ const Market: React.FC = () => {
             <BarChart3 className="w-4 h-4 mr-2 inline md:hidden" />
             <span>{t('market.overview')}</span>
           </TabsTrigger>
+          <TabsTrigger value="regional" className="data-[state=active]:bg-albania-red data-[state=active]:text-white flex-1 min-w-[80px]">
+            <MapPin className="w-4 h-4 mr-2 inline md:hidden" />
+            <span>{t('Regional Analysis')}</span>
+          </TabsTrigger>
           <TabsTrigger value="trends" className="data-[state=active]:bg-albania-red data-[state=active]:text-white flex-1 min-w-[80px]">
             <TrendingUp className="w-4 h-4 mr-2 inline md:hidden" />
             <span>{t('market.trends')}</span>
@@ -34,6 +40,10 @@ const Market: React.FC = () => {
           <TabsTrigger value="investment" className="data-[state=active]:bg-albania-red data-[state=active]:text-white flex-1 min-w-[80px]">
             <Briefcase className="w-4 h-4 mr-2 inline md:hidden" />
             <span>{t('market.investment')}</span>
+          </TabsTrigger>
+          <TabsTrigger value="banks" className="data-[state=active]:bg-albania-red data-[state=active]:text-white flex-1 min-w-[80px]">
+            <Building className="w-4 h-4 mr-2 inline md:hidden" />
+            <span>{t('Banks & Loans')}</span>
           </TabsTrigger>
           <TabsTrigger value="news" className="data-[state=active]:bg-albania-red data-[state=active]:text-white flex-1 min-w-[80px]">
             <Building className="w-4 h-4 mr-2 inline md:hidden" />
@@ -45,12 +55,24 @@ const Market: React.FC = () => {
           <OverviewTab />
         </TabsContent>
         
+        <TabsContent value="regional">
+          <div className="mb-6">
+            <RegionalPriceDashboard />
+          </div>
+        </TabsContent>
+        
         <TabsContent value="trends">
           <TrendsTab />
         </TabsContent>
         
         <TabsContent value="investment">
           <InvestmentTab />
+        </TabsContent>
+        
+        <TabsContent value="banks">
+          <div className="mb-6">
+            <AlbanianBanksEnhanced />
+          </div>
         </TabsContent>
         
         <TabsContent value="news">
