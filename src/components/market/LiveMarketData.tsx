@@ -38,7 +38,14 @@ const LiveMarketData: React.FC = () => {
         .single();
 
       if (error) throw error;
-      set_market_data(data);
+      
+      // Type assertion to ensure market_sentiment matches our expected type
+      const typed_data: MarketData = {
+        ...data,
+        market_sentiment: data.market_sentiment as 'bullish' | 'bearish' | 'neutral'
+      };
+      
+      set_market_data(typed_data);
     } catch (error) {
       console.error('Error fetching market data:', error);
     } finally {
