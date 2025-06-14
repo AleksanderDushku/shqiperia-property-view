@@ -2,9 +2,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Card, CardContent } from './ui/card';
-import { Button } from './ui/button';
-import { ChevronRight } from 'lucide-react';
-import { useDarkMode } from '../contexts/DarkModeContext';
+import { Badge } from './ui/badge';
+import { ArrowRight } from 'lucide-react';
 
 interface MobileNavCardProps {
   to: string;
@@ -12,7 +11,7 @@ interface MobileNavCardProps {
   description: string;
   icon: React.ReactNode;
   badge?: string;
-  color?: 'red' | 'green' | 'blue' | 'yellow';
+  color: 'red' | 'green' | 'blue' | 'yellow';
 }
 
 const MobileNavCard: React.FC<MobileNavCardProps> = ({
@@ -21,57 +20,45 @@ const MobileNavCard: React.FC<MobileNavCardProps> = ({
   description,
   icon,
   badge,
-  color = 'red'
+  color
 }) => {
-  const { dark_mode } = useDarkMode();
-
-  const getColorClasses = (color: string) => {
-    switch (color) {
-      case 'green':
-        return 'bg-green-50 dark:bg-green-900/20';
-      case 'blue':
-        return 'bg-blue-50 dark:bg-blue-900/20';
-      case 'yellow':
-        return 'bg-yellow-50 dark:bg-yellow-900/20';
-      default:
-        return 'bg-red-50 dark:bg-red-900/20';
-    }
+  const colorClasses = {
+    red: 'from-red-500 to-albania-red',
+    green: 'from-green-500 to-emerald-600',
+    blue: 'from-blue-500 to-indigo-600',
+    yellow: 'from-yellow-500 to-orange-600'
   };
 
   return (
     <Link to={to} className="group block">
-      <Card className={`transition-all duration-300 hover:shadow-lg hover:-translate-y-1 border-2 ${
-        dark_mode 
-          ? 'bg-gray-800 border-gray-700 hover:border-albania-red/50' 
-          : 'bg-white border-gray-100 hover:border-albania-red/30'
-      }`}>
+      <Card className="h-full hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border-0 bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 overflow-hidden">
         <CardContent className="p-6">
           <div className="flex items-start justify-between mb-4">
-            <div className={`p-4 rounded-2xl ${getColorClasses(color)}`}>
-              {icon}
+            <div className={`p-4 rounded-2xl bg-gradient-to-br ${colorClasses[color]} shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+              <div className="text-white">
+                {icon}
+              </div>
             </div>
             {badge && (
-              <span className="bg-albania-red text-white text-xs px-3 py-1 rounded-full font-medium">
+              <Badge className="bg-albania-red/10 text-albania-red border-albania-red/20 font-medium">
                 {badge}
-              </span>
+              </Badge>
             )}
           </div>
-          
+
           <div className="space-y-3">
-            <h3 className="text-xl font-bold dark:text-white group-hover:text-albania-red transition-colors">
+            <h3 className="text-xl font-bold text-gray-900 dark:text-white group-hover:text-albania-red transition-colors duration-300">
               {title}
             </h3>
-            <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+            <p className="text-gray-600 dark:text-gray-400 leading-relaxed line-clamp-3">
               {description}
             </p>
-            <div className="flex items-center justify-between mt-4">
-              <Button 
-                variant="ghost" 
-                className="text-albania-red hover:text-albania-red hover:bg-albania-red/10 p-0 h-auto font-medium"
-              >
-                Eksploro tani
-              </Button>
-              <ChevronRight className="h-5 w-5 text-albania-red group-hover:translate-x-1 transition-transform" />
+          </div>
+
+          <div className="flex items-center justify-end mt-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <div className="flex items-center gap-2 text-albania-red font-medium text-sm">
+              <span>Explore</span>
+              <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
             </div>
           </div>
         </CardContent>
