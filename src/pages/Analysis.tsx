@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../components/ui/card';
@@ -397,9 +398,9 @@ const Analysis: React.FC = () => {
                         <YAxis />
                         <Tooltip />
                         <Legend />
-                        <Line type="monotone" dataKey="sales" name={t('Shitjet')} stroke="#E41E20" radius={[4, 4, 0, 0]} />
-                        <Line type="monotone" dataKey="inquiries" name={t('Kërkesat')} stroke="#000000" />
-                        <Line type="monotone" dataKey="priceIndex" name={t('Indeksi i Çmimit')} stroke="#4CAF50" />
+                        <Line type="monotone" dataKey="sales" name={t('Shitjet')} stroke="#E41E20" strokeWidth={2} />
+                        <Line type="monotone" dataKey="inquiries" name={t('Kërkesat')} stroke="#000000" strokeWidth={2} />
+                        <Line type="monotone" dataKey="priceIndex" name={t('Indeksi i Çmimit')} stroke="#4CAF50" strokeWidth={2} />
                       </LineChart>
                     </ResponsiveContainer>
                   </div>
