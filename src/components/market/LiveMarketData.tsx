@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { Badge } from '../ui/badge';
-import { TrendingUp, TrendingDown, Activity, BarChart3, MapPin } from 'lucide-react';
+import { TrendingUp, TrendingDown, Activity, BarChart3, MapPin, Database } from 'lucide-react';
 import { supabase } from '../../integrations/supabase/client';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { LoadingSkeleton } from '../ui/loading-skeleton';
