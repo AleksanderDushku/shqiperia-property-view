@@ -10,8 +10,10 @@ import Analysis from "./pages/Analysis";
 import NotFound from "./pages/NotFound";
 import Calculator from "./pages/Calculator";
 import Neighborhoods from "./pages/Neighborhoods";
+import Auth from "./pages/Auth";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import { DarkModeProvider } from "./contexts/DarkModeContext";
+import { AuthProvider } from "./contexts/AuthContext";
 import "./App.css";
 import { Toaster } from "./components/ui/toaster";
 
@@ -19,25 +21,28 @@ function App() {
   return (
     <LanguageProvider>
       <DarkModeProvider>
-        <Router>
-          <div className="flex flex-col min-h-screen">
-            <Header />
-            <main className="flex-grow py-4">
-              <Routes>
-                <Route path="/" element={<Index />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/market" element={<Market />} />
-                <Route path="/properties" element={<Properties />} />
-                <Route path="/analysis" element={<Analysis />} />
-                <Route path="/calculator" element={<Calculator />} />
-                <Route path="/neighborhoods" element={<Neighborhoods />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </main>
-            <Footer />
-          </div>
-          <Toaster />
-        </Router>
+        <AuthProvider>
+          <Router>
+            <div className="flex flex-col min-h-screen">
+              <Header />
+              <main className="flex-grow py-4">
+                <Routes>
+                  <Route path="/" element={<Index />} />
+                  <Route path="/about" element={<About />} />
+                  <Route path="/market" element={<Market />} />
+                  <Route path="/properties" element={<Properties />} />
+                  <Route path="/analysis" element={<Analysis />} />
+                  <Route path="/calculator" element={<Calculator />} />
+                  <Route path="/neighborhoods" element={<Neighborhoods />} />
+                  <Route path="/auth" element={<Auth />} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </main>
+              <Footer />
+            </div>
+            <Toaster />
+          </Router>
+        </AuthProvider>
       </DarkModeProvider>
     </LanguageProvider>
   );

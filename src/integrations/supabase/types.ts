@@ -9,7 +9,126 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      lead_generation: {
+        Row: {
+          budget_range: string | null
+          created_at: string | null
+          email: string
+          full_name: string | null
+          id: string
+          interest_location: string | null
+          phone: string | null
+          report_type: string | null
+          user_type: string | null
+        }
+        Insert: {
+          budget_range?: string | null
+          created_at?: string | null
+          email: string
+          full_name?: string | null
+          id?: string
+          interest_location?: string | null
+          phone?: string | null
+          report_type?: string | null
+          user_type?: string | null
+        }
+        Update: {
+          budget_range?: string | null
+          created_at?: string | null
+          email?: string
+          full_name?: string | null
+          id?: string
+          interest_location?: string | null
+          phone?: string | null
+          report_type?: string | null
+          user_type?: string | null
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          bio: string | null
+          created_at: string | null
+          full_name: string | null
+          id: string
+          location: string | null
+          phone: string | null
+          updated_at: string | null
+          user_type: string | null
+          username: string | null
+          website: string | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string | null
+          full_name?: string | null
+          id: string
+          location?: string | null
+          phone?: string | null
+          updated_at?: string | null
+          user_type?: string | null
+          username?: string | null
+          website?: string | null
+        }
+        Update: {
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string | null
+          full_name?: string | null
+          id?: string
+          location?: string | null
+          phone?: string | null
+          updated_at?: string | null
+          user_type?: string | null
+          username?: string | null
+          website?: string | null
+        }
+        Relationships: []
+      }
+      property_watchlist: {
+        Row: {
+          alert_frequency: string | null
+          created_at: string | null
+          id: string
+          is_active: boolean | null
+          location: string | null
+          max_price: number | null
+          max_size: number | null
+          min_price: number | null
+          min_size: number | null
+          property_type: string | null
+          user_id: string
+        }
+        Insert: {
+          alert_frequency?: string | null
+          created_at?: string | null
+          id?: string
+          is_active?: boolean | null
+          location?: string | null
+          max_price?: number | null
+          max_size?: number | null
+          min_price?: number | null
+          min_size?: number | null
+          property_type?: string | null
+          user_id: string
+        }
+        Update: {
+          alert_frequency?: string | null
+          created_at?: string | null
+          id?: string
+          is_active?: boolean | null
+          location?: string | null
+          max_price?: number | null
+          max_size?: number | null
+          min_price?: number | null
+          min_size?: number | null
+          property_type?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
