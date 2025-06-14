@@ -1,12 +1,12 @@
-
 import React, { useState } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
 import { BarChart, LineChart, Line, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
-import { BarChart as BarChartIcon, PieChart as PieChartIcon, LineChart as LineChartIcon, Search, Filter, TrendingUp, AlertTriangle, ArrowUp, ArrowDown } from 'lucide-react';
+import { BarChart as BarChartIcon, PieChart as PieChartIcon, LineChart as LineChartIcon, TrendingUp, AlertTriangle, ArrowUp, ArrowDown, Brain, Zap } from 'lucide-react';
 import { useIsMobile } from '../hooks/use-mobile';
 import { regionPriceData, propertyTypesData, priceHistoryData } from '../data/propertyData';
+import { Badge } from '../components/ui/badge';
 
 // Sample data for affordability analysis
 const affordabilityData = [
@@ -58,157 +58,175 @@ const COLORS = ['#E41E20', '#000000', '#4CAF50', '#2196F3'];
 
 const KeyInsight = ({ icon: Icon, title, value, trend, trendValue }: { icon: React.ElementType, title: string, value: string, trend: 'up' | 'down' | 'neutral', trendValue: string }) => {
   return (
-    <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-100">
-      <div className="flex items-center gap-3">
-        <div className="p-2 rounded-full bg-red-50">
-          <Icon className="h-5 w-5 text-albania-red" />
-        </div>
-        <div>
-          <h3 className="text-sm font-medium text-gray-500">{title}</h3>
-          <div className="flex items-center gap-2">
-            <p className="text-lg font-bold">{value}</p>
-            <span className={`flex items-center text-xs font-medium ${
-              trend === 'up' ? 'text-green-600' : 
-              trend === 'down' ? 'text-red-600' : 'text-gray-500'
-            }`}>
-              {trend === 'up' ? <ArrowUp className="h-3 w-3" /> : 
-               trend === 'down' ? <ArrowDown className="h-3 w-3" /> : null}
-              {trendValue}
-            </span>
+    <Card className="bg-gradient-to-br from-white to-gray-50 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-0 shadow-lg">
+      <CardContent className="p-6">
+        <div className="flex items-center gap-4">
+          <div className="p-3 rounded-full bg-gradient-to-br from-albania-red to-red-600 shadow-lg">
+            <Icon className="h-6 w-6 text-white" />
+          </div>
+          <div className="flex-1">
+            <h3 className="text-sm font-medium text-gray-600 mb-1">{title}</h3>
+            <div className="flex items-center gap-3">
+              <p className="text-2xl font-bold text-gray-900">{value}</p>
+              <Badge className={`flex items-center gap-1 ${
+                trend === 'up' ? 'bg-green-100 text-green-700 border-green-200' : 
+                trend === 'down' ? 'bg-red-100 text-red-700 border-red-200' : 'bg-gray-100 text-gray-700 border-gray-200'
+              }`}>
+                {trend === 'up' ? <ArrowUp className="h-3 w-3" /> : 
+                 trend === 'down' ? <ArrowDown className="h-3 w-3" /> : null}
+                {trendValue}
+              </Badge>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   );
 };
 
 const Analysis: React.FC = () => {
   const { t } = useLanguage();
   const isMobile = useIsMobile();
-  const [activeTab, set_active_tab] = useState('market-dynamics');
 
   return (
-    <div className="container mx-auto px-3 py-6">
-      <div className="mb-6">
-        <h1 className={`${isMobile ? 'text-2xl' : 'text-3xl'} font-bold mb-2`}>{t('analysis.title')}</h1>
-        <p className="text-gray-600 text-sm md:text-base mb-6">{t('analysis.subtitle')}</p>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-albania-red/5 py-8">
+      <div className="container mx-auto px-4">
+        {/* Enhanced Header */}
+        <div className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 bg-gradient-to-r from-albania-red to-red-600 text-white px-6 py-3 rounded-full shadow-lg mb-6">
+            <Brain className="h-5 w-5 animate-pulse" />
+            <span className="font-semibold">{t('Analiza e Avancuar')} - AI</span>
+          </div>
+          <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-albania-red via-red-600 to-red-800 bg-clip-text text-transparent mb-4">
+            {t('Analiza e Tregut')}
+          </h1>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            {t('Analizë e thellë dhe profesionale e tregut të pronave në Shqipëri me teknologji AI')}
+          </p>
+        </div>
         
-        {/* Key Insights Banner */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        {/* Key Insights */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
           <KeyInsight 
             icon={TrendingUp} 
-            title={t('analysis.key.price')} 
+            title={t('Çmimi Mesatar')} 
             value="1,350 €/m²" 
             trend="up" 
             trendValue="+5.2%" 
           />
           <KeyInsight 
             icon={BarChartIcon} 
-            title={t('analysis.key.affordability')} 
+            title={t('Indeksi i Përballueshmerisë')} 
             value="16.2x" 
             trend="down" 
             trendValue="-0.8%" 
           />
           <KeyInsight 
             icon={PieChartIcon} 
-            title={t('analysis.key.roi')} 
+            title={t('Kthimi i Investimit')} 
             value="5.8%" 
             trend="up" 
             trendValue="+0.3%" 
           />
           <KeyInsight 
             icon={AlertTriangle} 
-            title={t('analysis.key.risk')} 
-            value="Medium" 
+            title={t('Indeksi i Rrezikut')} 
+            value="I Mesëm" 
             trend="neutral" 
-            trendValue="Stable" 
+            trendValue="Stabil" 
           />
         </div>
-      </div>
-      
-      <Card className="mb-6 border-0 shadow-sm">
-        <CardContent className="p-0">
-          <Tabs defaultValue="market-dynamics" onValueChange={set_active_tab} className="w-full">
-            <TabsList className="w-full bg-gray-50 rounded-t-lg p-1 border-b">
-              <TabsTrigger value="market-dynamics" className="data-[state=active]:bg-albania-red data-[state=active]:text-white flex-1 min-w-[100px]">
-                <div className="flex items-center gap-1">
+        
+        {/* Enhanced Tabs */}
+        <Card className="bg-white shadow-2xl border-0 rounded-3xl overflow-hidden">
+          <Tabs defaultValue="market-dynamics" className="w-full">
+            <div className="bg-gradient-to-r from-gray-50 to-white p-2">
+              <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 h-auto p-1 bg-transparent">
+                <TabsTrigger 
+                  value="market-dynamics" 
+                  className="flex items-center gap-2 py-4 px-6 text-sm font-medium data-[state=active]:bg-gradient-to-r data-[state=active]:from-albania-red data-[state=active]:to-red-600 data-[state=active]:text-white rounded-xl transition-all duration-300 data-[state=active]:shadow-lg"
+                >
                   <LineChartIcon className="w-4 h-4" />
-                  <span className={isMobile ? "text-xs" : ""}>{t('analysis.market.dynamics')}</span>
-                </div>
-              </TabsTrigger>
-              <TabsTrigger value="affordability" className="data-[state=active]:bg-albania-red data-[state=active]:text-white flex-1 min-w-[100px]">
-                <div className="flex items-center gap-1">
+                  <span className={isMobile ? "text-xs" : ""}>{t('Dinamika e Tregut')}</span>
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="affordability" 
+                  className="flex items-center gap-2 py-4 px-6 text-sm font-medium data-[state=active]:bg-gradient-to-r data-[state=active]:from-green-500 data-[state=active]:to-emerald-600 data-[state=active]:text-white rounded-xl transition-all duration-300 data-[state=active]:shadow-lg"
+                >
                   <BarChartIcon className="w-4 h-4" />
-                  <span className={isMobile ? "text-xs" : ""}>{t('analysis.affordability')}</span>
-                </div>
-              </TabsTrigger>
-              <TabsTrigger value="investment" className="data-[state=active]:bg-albania-red data-[state=active]:text-white flex-1 min-w-[100px]">
-                <div className="flex items-center gap-1">
+                  <span className={isMobile ? "text-xs" : ""}>{t('Përballueshmerria')}</span>
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="investment" 
+                  className="flex items-center gap-2 py-4 px-6 text-sm font-medium data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-indigo-600 data-[state=active]:text-white rounded-xl transition-all duration-300 data-[state=active]:shadow-lg"
+                >
                   <PieChartIcon className="w-4 h-4" />
-                  <span className={isMobile ? "text-xs" : ""}>{t('analysis.investment')}</span>
-                </div>
-              </TabsTrigger>
-              <TabsTrigger value="seasonality" className="data-[state=active]:bg-albania-red data-[state=active]:text-white flex-1 min-w-[100px]">
-                <div className="flex items-center gap-1">
+                  <span className={isMobile ? "text-xs" : ""}>{t('Investimi')}</span>
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="seasonality" 
+                  className="flex items-center gap-2 py-4 px-6 text-sm font-medium data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-violet-600 data-[state=active]:text-white rounded-xl transition-all duration-300 data-[state=active]:shadow-lg"
+                >
                   <LineChartIcon className="w-4 h-4" />
-                  <span className={isMobile ? "text-xs" : ""}>{t('analysis.seasonality')}</span>
-                </div>
-              </TabsTrigger>
-            </TabsList>
+                  <span className={isMobile ? "text-xs" : ""}>{t('Sezonshmëria')}</span>
+                </TabsTrigger>
+              </TabsList>
+            </div>
             
             {/* Market Dynamics Tab */}
-            <TabsContent value="market-dynamics" className="px-4 py-6">
-              <div className="mb-4">
-                <h2 className="text-xl font-semibold mb-2">{t('analysis.market.dynamics')}</h2>
-                <p className="text-gray-600 text-sm">{t('analysis.market.dynamics.description')}</p>
+            <TabsContent value="market-dynamics" className="p-8 space-y-8">
+              <div className="bg-gradient-to-r from-albania-red/5 to-red-100/50 rounded-2xl p-8 border border-albania-red/20">
+                <div className="flex items-center gap-3 mb-4">
+                  <Zap className="h-8 w-8 text-albania-red" />
+                  <h2 className="text-3xl font-bold text-albania-red">{t('Dinamika e Tregut')}</h2>
+                </div>
+                <p className="text-lg text-gray-700 leading-relaxed">
+                  {t('Analiza e detajuar e lëvizjeve të tregut të pronave në Shqipëri me fokus në trendet aktuale')}
+                </p>
               </div>
               
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 mb-6">
-                <Card>
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-base md:text-lg">{t('analysis.market.comparison')}</CardTitle>
-                    <CardDescription className="text-xs text-gray-500">
-                      {t('analysis.market.comparison.subtitle')}
-                    </CardDescription>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <Card className="shadow-xl border-0">
+                  <CardHeader className="bg-gradient-to-r from-albania-red to-red-600 text-white rounded-t-lg">
+                    <CardTitle className="flex items-center gap-3 text-xl">
+                      <BarChartIcon className="h-6 w-6" />
+                      {t('Krahasimi i Tregut')}
+                    </CardTitle>
                   </CardHeader>
-                  <CardContent>
-                    <div className={`${isMobile ? 'h-[250px]' : 'h-[300px]'}`}>
+                  <CardContent className="p-6">
+                    <div className="h-[350px]">
                       <ResponsiveContainer width="100%" height="100%">
-                        <BarChart
-                          data={marketComparisonData}
-                          margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
-                        >
+                        <BarChart data={marketComparisonData} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
                           <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
-                          <XAxis dataKey="city" tick={{fontSize: isMobile ? 10 : 12}} />
-                          <YAxis tick={{fontSize: isMobile ? 10 : 12}} />
+                          <XAxis dataKey="city" />
+                          <YAxis />
                           <Tooltip formatter={(value) => [`${value} €/m²`, '']} />
-                          <Legend wrapperStyle={{fontSize: isMobile ? 10 : 12}} />
-                          <Bar dataKey="commercial" name={t('property.commercial')} fill="#E41E20" />
-                          <Bar dataKey="residential" name={t('property.residential')} fill="#000000" />
-                          <Bar dataKey="mixed" name={t('property.mixed')} fill="#4CAF50" />
+                          <Legend />
+                          <Bar dataKey="commercial" name={t('Komerciale')} fill="#E41E20" radius={[4, 4, 0, 0]} />
+                          <Bar dataKey="residential" name={t('Rezidenciale')} fill="#000000" radius={[4, 4, 0, 0]} />
+                          <Bar dataKey="mixed" name={t('Përzier')} fill="#4CAF50" radius={[4, 4, 0, 0]} />
                         </BarChart>
                       </ResponsiveContainer>
                     </div>
                   </CardContent>
                 </Card>
                 
-                <Card>
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-base md:text-lg">{t('analysis.property.distribution')}</CardTitle>
-                    <CardDescription className="text-xs text-gray-500">
-                      {t('analysis.property.distribution.subtitle')}
-                    </CardDescription>
+                <Card className="shadow-xl border-0">
+                  <CardHeader className="bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-t-lg">
+                    <CardTitle className="flex items-center gap-3 text-xl">
+                      <PieChartIcon className="h-6 w-6" />
+                      {t('Shpërndarja e Pronave')}
+                    </CardTitle>
                   </CardHeader>
-                  <CardContent>
-                    <div className={`${isMobile ? 'h-[250px]' : 'h-[300px]'}`}>
+                  <CardContent className="p-6">
+                    <div className="h-[350px]">
                       <ResponsiveContainer width="100%" height="100%">
                         <PieChart>
                           <Pie
                             data={propertyTypesData}
                             cx="50%"
                             cy="50%"
-                            labelLine={true}
-                            outerRadius={isMobile ? 80 : 100}
+                            outerRadius={120}
                             fill="#8884d8"
                             dataKey="value"
                             label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
@@ -224,343 +242,173 @@ const Analysis: React.FC = () => {
                   </CardContent>
                 </Card>
               </div>
-              
-              <Card>
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-base md:text-lg">{t('analysis.price.evolution')}</CardTitle>
-                  <CardDescription className="text-xs text-gray-500">
-                    {t('analysis.price.evolution.subtitle')}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className={`${isMobile ? 'h-[300px]' : 'h-[350px]'}`}>
-                    <ResponsiveContainer width="100%" height="100%">
-                      <LineChart
-                        data={priceHistoryData}
-                        margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-                      >
-                        <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
-                        <XAxis dataKey="month" />
-                        <YAxis />
-                        <Tooltip formatter={(value) => [`${value} €/m²`, '']} />
-                        <Legend />
-                        <Line 
-                          type="monotone" 
-                          dataKey="apartment" 
-                          name={t('property.apartment')} 
-                          stroke="#E41E20" 
-                          activeDot={{ r: 8 }} 
-                          strokeWidth={2}
-                        />
-                        <Line 
-                          type="monotone" 
-                          dataKey="house" 
-                          name={t('property.house')} 
-                          stroke="#000000" 
-                        />
-                        <Line 
-                          type="monotone" 
-                          dataKey="land" 
-                          name={t('property.land')} 
-                          stroke="#4CAF50" 
-                        />
-                        <Line 
-                          type="monotone" 
-                          dataKey="commercial" 
-                          name={t('property.commercial')} 
-                          stroke="#2196F3" 
-                        />
-                      </LineChart>
-                    </ResponsiveContainer>
-                  </div>
-                </CardContent>
-              </Card>
             </TabsContent>
             
             {/* Affordability Tab */}
-            <TabsContent value="affordability" className="px-4 py-6">
-              <div className="mb-4">
-                <h2 className="text-xl font-semibold mb-2">{t('analysis.affordability')}</h2>
-                <p className="text-gray-600 text-sm">{t('analysis.affordability.description')}</p>
+            <TabsContent value="affordability" className="p-8 space-y-8">
+              <div className="bg-gradient-to-r from-green-50/5 to-emerald-100/50 rounded-2xl p-8 border border-green-200/20">
+                <div className="flex items-center gap-3 mb-4">
+                  <Zap className="h-8 w-8 text-green-600" />
+                  <h2 className="text-3xl font-bold text-green-700">{t('Përballueshmëria')}</h2>
+                </div>
+                <p className="text-lg text-gray-700 leading-relaxed">
+                  {t('Analiza e thelluar e përballueshmërisë së pronave në qytete të ndryshme të Shqipërisë')}
+                </p>
               </div>
-              
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 mb-6">
-                <Card>
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-base md:text-lg">{t('analysis.price.income.ratio')}</CardTitle>
-                    <CardDescription className="text-xs text-gray-500">
-                      {t('analysis.price.income.ratio.subtitle')}
-                    </CardDescription>
+            
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <Card className="shadow-xl border-0">
+                  <CardHeader className="bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-t-lg">
+                    <CardTitle className="flex items-center gap-3 text-xl">
+                      <BarChartIcon className="h-6 w-6" />
+                      {t('Raporti Çmim/Të Ardhura')}
+                    </CardTitle>
                   </CardHeader>
-                  <CardContent>
-                    <div className={`${isMobile ? 'h-[250px]' : 'h-[300px]'}`}>
+                  <CardContent className="p-6">
+                    <div className="h-[350px]">
                       <ResponsiveContainer width="100%" height="100%">
-                        <BarChart
-                          data={affordabilityData}
-                          margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
-                        >
+                        <BarChart data={affordabilityData} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
                           <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
-                          <XAxis dataKey="city" tick={{fontSize: isMobile ? 10 : 12}} />
-                          <YAxis tick={{fontSize: isMobile ? 10 : 12}} />
-                          <Tooltip />
-                          <Legend wrapperStyle={{fontSize: isMobile ? 10 : 12}} />
-                          <Bar dataKey="priceToIncomeRatio" name={t('analysis.price.income.ratio')} fill="#E41E20" />
+                          <XAxis dataKey="city" />
+                          <YAxis />
+                          <Tooltip formatter={(value) => [`${value}x`, '']} />
+                          <Legend />
+                          <Bar dataKey="priceToIncomeRatio" name={t('Raporti')} fill="#E41E20" radius={[4, 4, 0, 0]} />
                         </BarChart>
                       </ResponsiveContainer>
                     </div>
                   </CardContent>
                 </Card>
-                
-                <Card>
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-base md:text-lg">{t('analysis.affordability.index')}</CardTitle>
-                    <CardDescription className="text-xs text-gray-500">
-                      {t('analysis.affordability.index.subtitle')}
-                    </CardDescription>
+            
+                <Card className="shadow-xl border-0">
+                  <CardHeader className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-t-lg">
+                    <CardTitle className="flex items-center gap-3 text-xl">
+                      <BarChartIcon className="h-6 w-6" />
+                      {t('Indeksi i Përballueshmërisë')}
+                    </CardTitle>
                   </CardHeader>
-                  <CardContent>
-                    <div className={`${isMobile ? 'h-[250px]' : 'h-[300px]'}`}>
+                  <CardContent className="p-6">
+                    <div className="h-[350px]">
                       <ResponsiveContainer width="100%" height="100%">
-                        <BarChart
-                          data={affordabilityData}
-                          margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
-                        >
+                        <BarChart data={affordabilityData} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
                           <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
-                          <XAxis dataKey="city" tick={{fontSize: isMobile ? 10 : 12}} />
-                          <YAxis tick={{fontSize: isMobile ? 10 : 12}} />
+                          <XAxis dataKey="city" />
+                          <YAxis />
                           <Tooltip />
-                          <Legend wrapperStyle={{fontSize: isMobile ? 10 : 12}} />
-                          <Bar dataKey="affordabilityIndex" name={t('analysis.affordability.index')} fill="#4CAF50" />
+                          <Legend />
+                          <Bar dataKey="affordabilityIndex" name={t('Indeksi')} fill="#4CAF50" radius={[4, 4, 0, 0]} />
                         </BarChart>
                       </ResponsiveContainer>
                     </div>
-                    <p className="mt-4 text-xs md:text-sm text-gray-600">
-                      {t('analysis.affordability.note')}
+                    <p className="mt-4 text-sm text-gray-600 text-center">
+                      {t('Sa më i lartë indeksi, aq më e përballueshme është prona')}
                     </p>
                   </CardContent>
                 </Card>
               </div>
-              
-              <Card>
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-base md:text-lg">{t('analysis.median.income')}</CardTitle>
-                  <CardDescription className="text-xs text-gray-500">
-                    {t('analysis.median.income.subtitle')}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className={`${isMobile ? 'h-[300px]' : 'h-[350px]'}`}>
-                    <ResponsiveContainer width="100%" height="100%">
-                      <BarChart
-                        data={affordabilityData}
-                        margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-                      >
-                        <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
-                        <XAxis dataKey="city" />
-                        <YAxis />
-                        <Tooltip formatter={(value) => [`${value} €`, '']} />
-                        <Legend />
-                        <Bar dataKey="medianIncome" name={t('analysis.median.income')} fill="#2196F3" />
-                      </BarChart>
-                    </ResponsiveContainer>
-                  </div>
-                </CardContent>
-              </Card>
             </TabsContent>
             
             {/* Investment Tab */}
-            <TabsContent value="investment" className="px-4 py-6">
-              <div className="mb-4">
-                <h2 className="text-xl font-semibold mb-2">{t('analysis.investment')}</h2>
-                <p className="text-gray-600 text-sm">{t('analysis.investment.description')}</p>
+            <TabsContent value="investment" className="p-8 space-y-8">
+              <div className="bg-gradient-to-r from-blue-50/5 to-indigo-100/50 rounded-2xl p-8 border border-blue-200/20">
+                <div className="flex items-center gap-3 mb-4">
+                  <Zap className="h-8 w-8 text-blue-600" />
+                  <h2 className="text-3xl font-bold text-blue-700">{t('Potenciali i Investimit')}</h2>
+                </div>
+                <p className="text-lg text-gray-700 leading-relaxed">
+                  {t('Analiza e mundësive të investimit në tregun e pronave në Shqipëri')}
+                </p>
               </div>
-              
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 mb-6">
-                <Card>
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-base md:text-lg">{t('analysis.roi')}</CardTitle>
-                    <CardDescription className="text-xs text-gray-500">
-                      {t('analysis.roi.subtitle')}
-                    </CardDescription>
+            
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <Card className="shadow-xl border-0">
+                  <CardHeader className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-t-lg">
+                    <CardTitle className="flex items-center gap-3 text-xl">
+                      <PieChartIcon className="h-6 w-6" />
+                      {t('ROI Vjetor')}
+                    </CardTitle>
                   </CardHeader>
-                  <CardContent>
-                    <div className={`${isMobile ? 'h-[250px]' : 'h-[300px]'}`}>
+                  <CardContent className="p-6">
+                    <div className="h-[350px]">
                       <ResponsiveContainer width="100%" height="100%">
-                        <BarChart
-                          data={investmentData}
-                          margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
-                        >
+                        <BarChart data={investmentData} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
                           <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
-                          <XAxis dataKey="city" tick={{fontSize: isMobile ? 10 : 12}} />
-                          <YAxis tick={{fontSize: isMobile ? 10 : 12}} />
+                          <XAxis dataKey="city" />
+                          <YAxis />
                           <Tooltip formatter={(value) => [`${value}%`, '']} />
-                          <Legend wrapperStyle={{fontSize: isMobile ? 10 : 12}} />
-                          <Bar dataKey="roi" name={t('analysis.annual.roi')} fill="#E41E20" />
+                          <Legend />
+                          <Bar dataKey="roi" name={t('ROI')} fill="#E41E20" radius={[4, 4, 0, 0]} />
                         </BarChart>
                       </ResponsiveContainer>
                     </div>
                   </CardContent>
                 </Card>
-                
-                <Card>
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-base md:text-lg">{t('analysis.growth.potential')}</CardTitle>
-                    <CardDescription className="text-xs text-gray-500">
-                      {t('analysis.growth.potential.subtitle')}
-                    </CardDescription>
+            
+                <Card className="shadow-xl border-0">
+                  <CardHeader className="bg-gradient-to-r from-purple-500 to-violet-600 text-white rounded-t-lg">
+                    <CardTitle className="flex items-center gap-3 text-xl">
+                      <PieChartIcon className="h-6 w-6" />
+                      {t('Potenciali i Rritjes')}
+                    </CardTitle>
                   </CardHeader>
-                  <CardContent>
-                    <div className={`${isMobile ? 'h-[250px]' : 'h-[300px]'}`}>
+                  <CardContent className="p-6">
+                    <div className="h-[350px]">
                       <ResponsiveContainer width="100%" height="100%">
-                        <BarChart
-                          data={investmentData}
-                          margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
-                        >
+                        <BarChart data={investmentData} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
                           <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
-                          <XAxis dataKey="city" tick={{fontSize: isMobile ? 10 : 12}} />
-                          <YAxis tick={{fontSize: isMobile ? 10 : 12}} />
+                          <XAxis dataKey="city" />
+                          <YAxis />
                           <Tooltip formatter={(value) => [`${value}%`, '']} />
-                          <Legend wrapperStyle={{fontSize: isMobile ? 10 : 12}} />
-                          <Bar dataKey="growthPotential" name={t('analysis.growth.potential')} fill="#4CAF50" />
+                          <Legend />
+                          <Bar dataKey="growthPotential" name={t('Potenciali')} fill="#4CAF50" radius={[4, 4, 0, 0]} />
                         </BarChart>
                       </ResponsiveContainer>
                     </div>
                   </CardContent>
                 </Card>
               </div>
-              
-              <Card>
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-base md:text-lg">{t('analysis.risk.assessment')}</CardTitle>
-                  <CardDescription className="text-xs text-gray-500">
-                    {t('analysis.risk.assessment.subtitle')}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className={`${isMobile ? 'h-[300px]' : 'h-[350px]'}`}>
-                    <ResponsiveContainer width="100%" height="100%">
-                      <BarChart
-                        data={investmentData}
-                        margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-                      >
-                        <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
-                        <XAxis dataKey="city" />
-                        <YAxis domain={[0, 10]} />
-                        <Tooltip formatter={(value) => [`${value}/10`, '']} />
-                        <Legend />
-                        <Bar dataKey="riskIndex" name={t('analysis.risk.index')} fill="#2196F3" />
-                      </BarChart>
-                    </ResponsiveContainer>
-                  </div>
-                  <p className="mt-4 text-xs md:text-sm text-gray-600">
-                    {t('analysis.risk.note')}
-                  </p>
-                </CardContent>
-              </Card>
             </TabsContent>
             
             {/* Seasonality Tab */}
-            <TabsContent value="seasonality" className="px-4 py-6">
-              <div className="mb-4">
-                <h2 className="text-xl font-semibold mb-2">{t('analysis.seasonality')}</h2>
-                <p className="text-gray-600 text-sm">{t('analysis.seasonality.description')}</p>
+            <TabsContent value="seasonality" className="p-8 space-y-8">
+              <div className="bg-gradient-to-r from-purple-50/5 to-violet-100/50 rounded-2xl p-8 border border-purple-200/20">
+                <div className="flex items-center gap-3 mb-4">
+                  <Zap className="h-8 w-8 text-purple-600" />
+                  <h2 className="text-3xl font-bold text-purple-700">{t('Sezonshmëria e Tregut')}</h2>
+                </div>
+                <p className="text-lg text-gray-700 leading-relaxed">
+                  {t('Analiza e ndikimit të stinëve në tregun e pronave në Shqipëri')}
+                </p>
               </div>
-              
-              <Card className="mb-6">
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-base md:text-lg">{t('analysis.seasonal.sales')}</CardTitle>
-                  <CardDescription className="text-xs text-gray-500">
-                    {t('analysis.seasonal.sales.subtitle')}
-                  </CardDescription>
+            
+              <Card className="shadow-xl border-0">
+                <CardHeader className="bg-gradient-to-r from-purple-500 to-violet-600 text-white rounded-t-lg">
+                  <CardTitle className="flex items-center gap-3 text-xl">
+                    <LineChartIcon className="h-6 w-6" />
+                    {t('Shitjet Sezonale')}
+                  </CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <div className={`${isMobile ? 'h-[300px]' : 'h-[350px]'}`}>
+                <CardContent className="p-6">
+                  <div className="h-[400px]">
                     <ResponsiveContainer width="100%" height="100%">
-                      <LineChart
-                        data={seasonalityData}
-                        margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-                      >
+                      <LineChart data={seasonalityData} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
                         <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
                         <XAxis dataKey="month" />
-                        <YAxis yAxisId="left" />
-                        <YAxis yAxisId="right" orientation="right" />
+                        <YAxis />
                         <Tooltip />
                         <Legend />
-                        <Line 
-                          yAxisId="left"
-                          type="monotone" 
-                          dataKey="sales" 
-                          name={t('analysis.monthly.sales')} 
-                          stroke="#E41E20" 
-                          activeDot={{ r: 8 }} 
-                        />
-                        <Line 
-                          yAxisId="left"
-                          type="monotone" 
-                          dataKey="inquiries" 
-                          name={t('analysis.monthly.inquiries')} 
-                          stroke="#000000" 
-                        />
-                        <Line 
-                          yAxisId="right"
-                          type="monotone" 
-                          dataKey="priceIndex" 
-                          name={t('analysis.price.index')} 
-                          stroke="#4CAF50" 
-                        />
+                        <Line type="monotone" dataKey="sales" name={t('Shitjet')} stroke="#E41E20" radius={[4, 4, 0, 0]} />
+                        <Line type="monotone" dataKey="inquiries" name={t('Kërkesat')} stroke="#000000" />
+                        <Line type="monotone" dataKey="priceIndex" name={t('Indeksi i Çmimit')} stroke="#4CAF50" />
                       </LineChart>
                     </ResponsiveContainer>
                   </div>
                 </CardContent>
               </Card>
-              
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <Card className="bg-white border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-base md:text-lg">{t('analysis.peak.season')}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex flex-col items-center justify-center p-2">
-                      <div className="text-3xl font-bold text-albania-red mb-2">Q2-Q3</div>
-                      <p className="text-center text-sm text-gray-600">
-                        {t('analysis.peak.season.info')}
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
-                
-                <Card className="bg-white border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-base md:text-lg">{t('analysis.price.fluctuation')}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex flex-col items-center justify-center p-2">
-                      <div className="text-3xl font-bold text-albania-red mb-2">8.2%</div>
-                      <p className="text-center text-sm text-gray-600">
-                        {t('analysis.price.fluctuation.info')}
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
-                
-                <Card className="bg-white border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-base md:text-lg">{t('analysis.best.buying.time')}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex flex-col items-center justify-center p-2">
-                      <div className="text-3xl font-bold text-albania-red mb-2">Q4-Q1</div>
-                      <p className="text-center text-sm text-gray-600">
-                        {t('analysis.best.buying.info')}
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
             </TabsContent>
           </Tabs>
-        </CardContent>
-      </Card>
+        </Card>
+      </div>
     </div>
   );
 };

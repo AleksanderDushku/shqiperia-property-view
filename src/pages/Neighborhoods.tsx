@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import NeighborhoodProfile from '../components/NeighborhoodProfile';
@@ -6,11 +5,13 @@ import { Input } from '../components/ui/input';
 import { Button } from '../components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
-import { Search, MapPin, Building, Filter } from 'lucide-react';
+import { Search, MapPin, Building, Filter, Brain, Zap } from 'lucide-react';
 import { NeighborhoodData } from '../types/neighborhood';
 import PropertyMap from '../components/PropertyMap';
+import { Card, CardContent } from '../components/ui/card';
+import { Badge } from '../components/ui/badge';
 
-// Sample neighborhood data
+// Sample neighborhood data - keeping existing data
 const neighborhoodsData: NeighborhoodData[] = [
   {
     id: "bllok",
@@ -178,99 +179,137 @@ const NeighborhoodsPage: React.FC = () => {
   };
   
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold mb-2">{t('Lagjet dhe zonat')}</h1>
-        <p className="text-gray-600">{t('Zbuloni karakteristikat, çmimet dhe trendet për secilën lagje')}</p>
-      </div>
-      
-      <div className="bg-white p-4 rounded-lg shadow mb-6 border border-gray-100">
-        <div className="flex flex-col md:flex-row gap-4 mb-4">
-          <div className="relative flex-1">
-            <Search className="absolute left-2 top-2.5 h-4 w-4 text-gray-400" />
-            <Input
-              placeholder={t('Kërko lagje...')}
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-8"
-            />
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-green-50 py-8">
+      <div className="container mx-auto px-4">
+        {/* Enhanced Header */}
+        <div className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white px-6 py-3 rounded-full shadow-lg mb-6">
+            <Brain className="h-5 w-5 animate-pulse" />
+            <span className="font-semibold">{t('Analiza e Lagjeve')} - AI</span>
           </div>
-          
-          <div className="w-full md:w-48">
-            <Select value={selectedCity} onValueChange={setSelectedCity}>
-              <SelectTrigger>
-                <MapPin className="h-4 w-4 mr-2 text-gray-500" />
-                <SelectValue placeholder={t('Qyteti')} />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="tirane">{t('Tiranë')}</SelectItem>
-                <SelectItem value="durres">{t('Durrës')}</SelectItem>
-                <SelectItem value="vlore">{t('Vlorë')}</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          
-          <div className="w-full md:w-64">
-            <Select value={priceSort} onValueChange={setPriceSort}>
-              <SelectTrigger>
-                <Filter className="h-4 w-4 mr-2 text-gray-500" />
-                <SelectValue placeholder={t('Rendit sipas...')} />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="default">{t('Parazgjedhur')}</SelectItem>
-                <SelectItem value="low-high">{t('Çmimi: I ulët në të lartë')}</SelectItem>
-                <SelectItem value="high-low">{t('Çmimi: I lartë në të ulët')}</SelectItem>
-                <SelectItem value="growth">{t('Rritja më e lartë')}</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          
-          <Button 
-            onClick={handleSearch} 
-            className="bg-albania-red hover:bg-albania-red/90 text-white md:w-auto"
-          >
-            {t('Kërko')}
-          </Button>
+          <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-green-600 via-emerald-600 to-teal-700 bg-clip-text text-transparent mb-4">
+            {t('Lagjet dhe Zonat')}
+          </h1>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            {t('Zbuloni karakteristikat, çmimet dhe trendet për secilën lagje me analizë të detajuar')}
+          </p>
         </div>
-      </div>
-      
-      <Tabs defaultValue="list" className="w-full mb-6">
-        <TabsList className="w-full max-w-md mx-auto mb-6">
-          <TabsTrigger value="list" className="flex-1 data-[state=active]:bg-albania-red data-[state=active]:text-white">
-            <Building className="w-4 h-4 mr-2 inline" />
-            {t('Listë')}
-          </TabsTrigger>
-          <TabsTrigger value="map" className="flex-1 data-[state=active]:bg-albania-red data-[state=active]:text-white">
-            <MapPin className="w-4 h-4 mr-2 inline" />
-            {t('Hartë')}
-          </TabsTrigger>
-        </TabsList>
         
-        <TabsContent value="list">
-          <div className="grid grid-cols-1 gap-6">
-            {filteredNeighborhoods.length > 0 ? (
-              filteredNeighborhoods.map(neighborhood => (
-                <NeighborhoodProfile key={neighborhood.id} neighborhood={neighborhood} />
-              ))
-            ) : (
-              <div className="text-center py-10">
-                <Building className="h-10 w-10 text-gray-300 mx-auto mb-4" />
-                <h3 className="text-lg font-medium text-gray-500 mb-1">{t('Asnjë lagje e gjetur')}</h3>
-                <p className="text-gray-400">
-                  {t('Provo të ndryshosh kriteret e kërkimit')}
-                </p>
+        {/* Enhanced Search Card */}
+        <Card className="bg-gradient-to-r from-white to-gray-50 shadow-xl border-0 rounded-2xl mb-8">
+          <CardContent className="p-6">
+            <div className="flex flex-col md:flex-row gap-4 mb-4">
+              <div className="relative flex-1">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                <Input
+                  placeholder={t('Kërko lagje...')}
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="pl-10 h-12 bg-white border-gray-200 focus:border-green-500 focus:ring-green-500"
+                />
               </div>
-            )}
-          </div>
-        </TabsContent>
+              
+              <div className="w-full md:w-48">
+                <Select value={selectedCity} onValueChange={setSelectedCity}>
+                  <SelectTrigger className="h-12 bg-white border-gray-200 focus:border-green-500 focus:ring-green-500">
+                    <MapPin className="h-4 w-4 mr-2 text-gray-500" />
+                    <SelectValue placeholder={t('Qyteti')} />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="tirane">{t('Tiranë')}</SelectItem>
+                    <SelectItem value="durres">{t('Durrës')}</SelectItem>
+                    <SelectItem value="vlore">{t('Vlorë')}</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              
+              <div className="w-full md:w-64">
+                <Select value={priceSort} onValueChange={setPriceSort}>
+                  <SelectTrigger className="h-12 bg-white border-gray-200 focus:border-green-500 focus:ring-green-500">
+                    <Filter className="h-4 w-4 mr-2 text-gray-500" />
+                    <SelectValue placeholder={t('Rendit sipas...')} />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="default">{t('Parazgjedhur')}</SelectItem>
+                    <SelectItem value="low-high">{t('Çmimi: I ulët në të lartë')}</SelectItem>
+                    <SelectItem value="high-low">{t('Çmimi: I lartë në të ulët')}</SelectItem>
+                    <SelectItem value="growth">{t('Rritja më e lartë')}</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              
+              <Button 
+                onClick={handleSearch} 
+                className="h-12 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white shadow-lg transition-all duration-300 hover:shadow-xl px-8"
+              >
+                {t('Kërko')}
+              </Button>
+            </div>
+
+            {/* Quick Stats */}
+            <div className="flex flex-wrap gap-3 pt-4 border-t border-gray-100">
+              <Badge className="bg-green-100 text-green-800 border-green-200 px-4 py-2">
+                <Zap className="h-3 w-3 mr-1" />
+                {filteredNeighborhoods.length} {t('lagje të gjetura')}
+              </Badge>
+              <Badge className="bg-blue-100 text-blue-800 border-blue-200 px-4 py-2">
+                {t('Çmimi Mesatar')}: €{Math.round(filteredNeighborhoods.reduce((acc, n) => acc + n.avgPrice, 0) / filteredNeighborhoods.length || 0)}/m²
+              </Badge>
+            </div>
+          </CardContent>
+        </Card>
         
-        <TabsContent value="map">
-          <PropertyMap
-            neighborhoods={filteredNeighborhoods}
-            selectedCity={selectedCity}
-          />
-        </TabsContent>
-      </Tabs>
+        {/* Enhanced Tabs */}
+        <Card className="bg-white shadow-2xl border-0 rounded-3xl overflow-hidden">
+          <Tabs defaultValue="list" className="w-full">
+            <div className="bg-gradient-to-r from-gray-50 to-white p-2">
+              <TabsList className="w-full max-w-md mx-auto h-auto p-1 bg-transparent">
+                <TabsTrigger 
+                  value="list" 
+                  className="flex-1 flex items-center gap-2 py-4 px-6 data-[state=active]:bg-gradient-to-r data-[state=active]:from-green-500 data-[state=active]:to-emerald-600 data-[state=active]:text-white rounded-xl transition-all duration-300 data-[state=active]:shadow-lg"
+                >
+                  <Building className="w-4 h-4" />
+                  {t('Listë')}
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="map" 
+                  className="flex-1 flex items-center gap-2 py-4 px-6 data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-indigo-600 data-[state=active]:text-white rounded-xl transition-all duration-300 data-[state=active]:shadow-lg"
+                >
+                  <MapPin className="w-4 h-4" />
+                  {t('Hartë')}
+                </TabsTrigger>
+              </TabsList>
+            </div>
+            
+            <TabsContent value="list" className="p-8">
+              <div className="grid grid-cols-1 gap-8">
+                {filteredNeighborhoods.length > 0 ? (
+                  filteredNeighborhoods.map(neighborhood => (
+                    <NeighborhoodProfile key={neighborhood.id} neighborhood={neighborhood} />
+                  ))
+                ) : (
+                  <div className="text-center py-16">
+                    <div className="p-4 bg-gray-100 rounded-full w-fit mx-auto mb-4">
+                      <Building className="h-12 w-12 text-gray-400" />
+                    </div>
+                    <h3 className="text-xl font-semibold text-gray-500 mb-2">{t('Asnjë lagje e gjetur')}</h3>
+                    <p className="text-gray-400">
+                      {t('Provo të ndryshosh kriteret e kërkimit')}
+                    </p>
+                  </div>
+                )}
+              </div>
+            </TabsContent>
+            
+            <TabsContent value="map" className="p-8">
+              <PropertyMap
+                neighborhoods={filteredNeighborhoods}
+                selectedCity={selectedCity}
+              />
+            </TabsContent>
+          </Tabs>
+        </Card>
+      </div>
     </div>
   );
 };
