@@ -6,7 +6,7 @@ import LiveMarketData from '../components/market/LiveMarketData';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
 import { Badge } from '../components/ui/badge';
 import { Button } from '../components/ui/button';
-import { TrendingUp, MapPin, Calculator, BarChart3, Users, Building2, Target, ArrowRight, Zap, Brain, Clock } from 'lucide-react';
+import { TrendingUp, MapPin, Calculator, BarChart3, Building2, Target, ArrowRight, Zap, Brain, Clock } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Index: React.FC = () => {
@@ -164,8 +164,8 @@ const Index: React.FC = () => {
             </h2>
             <p className="text-gray-600 dark:text-gray-300">
               {language === 'sq' 
-                ? 'Përditësohet automatikisht dy herë në ditë në orën 6 të mëngjesit dhe 6 të mbrëmjes'
-                : 'Updated automatically twice daily at 6 AM & 6 PM'
+                ? 'Përditësohet automatikisht dy herë në ditë'
+                : 'Updated automatically twice daily'
               }
             </p>
           </div>
@@ -188,9 +188,9 @@ const Index: React.FC = () => {
           </p>
           <div className="flex justify-center gap-8">
             <div className="text-center">
-              <div className="text-2xl font-bold text-albania-red">5+</div>
+              <div className="text-2xl font-bold text-albania-red">24/7</div>
               <div className="text-sm text-gray-600 dark:text-gray-300">
-                {language === 'sq' ? 'Burime të Dhënash' : 'Data Sources'}
+                {language === 'sq' ? 'Monitorim' : 'Monitoring'}
               </div>
             </div>
             <div className="text-center">
@@ -200,9 +200,9 @@ const Index: React.FC = () => {
               </div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-albania-red">24/7</div>
+              <div className="text-2xl font-bold text-albania-red">AI</div>
               <div className="text-sm text-gray-600 dark:text-gray-300">
-                {language === 'sq' ? 'Monitorim' : 'Monitoring'}
+                {language === 'sq' ? 'Inteligjencë Artificiale' : 'Artificial Intelligence'}
               </div>
             </div>
           </div>
