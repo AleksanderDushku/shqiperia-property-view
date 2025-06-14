@@ -10,72 +10,91 @@ import { TrendingUp, MapPin, Calculator, BarChart3, Users, Building2, Target, Ar
 import { Link } from 'react-router-dom';
 
 const Index: React.FC = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { dark_mode } = useDarkMode();
 
   const company_benefits = [
     {
       icon: <TrendingUp className="h-6 w-6" />,
-      title: t('Lead Generation'),
-      description: t('Attract qualified buyers and sellers with market insights'),
+      title: language === 'sq' ? 'Gjenerimi i Klientëve' : 'Lead Generation',
+      description: language === 'sq' ? 'Tërhiqni blerës dhe shitës të kualifikuar me analizat e tregut' : 'Attract qualified buyers and sellers with market insights',
       link: '/market',
       color: 'from-green-500 to-emerald-600'
     },
     {
       icon: <Calculator className="h-6 w-6" />,
-      title: t('Client Tools'),
-      description: t('Mortgage calculator and investment analysis for clients'),
+      title: language === 'sq' ? 'Vegla për Klientët' : 'Client Tools',
+      description: language === 'sq' ? 'Kalkulatori i kredisë hipotekare dhe analiza e investimeve për klientët' : 'Mortgage calculator and investment analysis for clients',
       link: '/calculator',
       color: 'from-blue-500 to-indigo-600'
     },
     {
       icon: <MapPin className="h-6 w-6" />,
-      title: t('Market Intelligence'),
-      description: t('Neighborhood insights and pricing intelligence'),
+      title: language === 'sq' ? 'Inteligjenca e Tregut' : 'Market Intelligence',
+      description: language === 'sq' ? 'Informacione për lagjet dhe inteligjenca e çmimeve' : 'Neighborhood insights and pricing intelligence',
       link: '/neighborhoods',
       color: 'from-purple-500 to-violet-600'
     },
     {
       icon: <BarChart3 className="h-6 w-6" />,
-      title: t('Professional Reports'),
-      description: t('Market analysis reports for presentations'),
+      title: language === 'sq' ? 'Raporte Profesionale' : 'Professional Reports',
+      description: language === 'sq' ? 'Raporte të analizës së tregut për prezantime' : 'Market analysis reports for presentations',
       link: '/analysis',
       color: 'from-amber-500 to-orange-600'
     }
   ];
 
   const quick_stats = [
-    { value: '15,000+', label: t('Properties Tracked'), icon: <Building2 className="h-5 w-5" /> },
-    { value: '12+', label: t('Cities Covered'), icon: <MapPin className="h-5 w-5" /> },
-    { value: '2x', label: t('Daily Updates'), icon: <Clock className="h-5 w-5" /> },
-    { value: '99.9%', label: t('Data Accuracy'), icon: <Target className="h-5 w-5" /> }
+    { 
+      value: '15,000+', 
+      label: language === 'sq' ? 'Prona të Gjurmuara' : 'Properties Tracked', 
+      icon: <Building2 className="h-5 w-5" /> 
+    },
+    { 
+      value: '12+', 
+      label: language === 'sq' ? 'Qytete të Mbuluara' : 'Cities Covered', 
+      icon: <MapPin className="h-5 w-5" /> 
+    },
+    { 
+      value: '2x', 
+      label: language === 'sq' ? 'Përditësime Ditore' : 'Daily Updates', 
+      icon: <Clock className="h-5 w-5" /> 
+    },
+    { 
+      value: '99.9%', 
+      label: language === 'sq' ? 'Saktësia e të Dhënave' : 'Data Accuracy', 
+      icon: <Target className="h-5 w-5" /> 
+    }
   ];
 
   return (
     <div className={`min-h-screen ${dark_mode ? 'bg-gray-900' : 'bg-gray-50'}`}>
-      {/* Minimal Hero Section */}
+      {/* Hero Section */}
       <section className={`relative ${dark_mode ? 'bg-gradient-to-br from-gray-900 to-albania-red/20' : 'bg-gradient-to-br from-albania-red to-red-700'} text-white py-20`}>
         <div className="container mx-auto px-4 text-center">
           <Badge className="bg-white/20 backdrop-blur-sm text-white border-white/30 px-4 py-2 mb-6">
             <Zap className="h-4 w-4 mr-2" />
-            {t('AI-Powered Market Data')}
+            {language === 'sq' ? 'Të dhëna të Tregut me AI' : 'AI-Powered Market Data'}
           </Badge>
           
           <h1 className="text-4xl md:text-6xl font-bold mb-6">
-            {t('Real Estate Intelligence')}
+            {language === 'sq' ? 'Inteligjenca e Pronave' : 'Real Estate Intelligence'}
             <span className="block text-xl md:text-2xl font-normal mt-4 opacity-90">
-              {t('For Modern Real Estate Professionals')}
+              {language === 'sq' ? 'Për Profesionistët Modernë të Pronave' : 'For Modern Real Estate Professionals'}
             </span>
           </h1>
           
           <p className="text-xl opacity-90 max-w-3xl mx-auto mb-8">
-            {t('Empower your real estate business with AI-driven market insights, automated reports, and client tools.')}
+            {language === 'sq' 
+              ? 'Fuqizoni biznesin tuaj të pronave me analizat e tregut të bazuara në AI, raportet e automatizuara dhe vegla për klientët.'
+              : 'Empower your real estate business with AI-driven market insights, automated reports, and client tools.'
+            }
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
             <Button asChild size="lg" className="bg-white text-albania-red hover:bg-gray-100 font-semibold px-8 py-3">
               <Link to="/market">
-                {t('View Market Data')}
+                {language === 'sq' ? 'Shiko të Dhënat e Tregut' : 'View Market Data'}
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
@@ -99,10 +118,13 @@ const Index: React.FC = () => {
         <section>
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-albania-red to-red-600 bg-clip-text text-transparent">
-              {t('Grow Your Real Estate Business')}
+              {language === 'sq' ? 'Rritni Biznesin tuaj të Pronave' : 'Grow Your Real Estate Business'}
             </h2>
             <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-              {t('Everything you need to serve clients better and close more deals')}
+              {language === 'sq' 
+                ? 'Gjithçka që ju nevojitet për të shërbyer më mirë klientët dhe për të mbyllur më shumë marrëveshje'
+                : 'Everything you need to serve clients better and close more deals'
+              }
             </p>
           </div>
           
@@ -124,7 +146,7 @@ const Index: React.FC = () => {
                   </p>
                   <Button asChild variant="outline" size="sm" className="w-full">
                     <Link to={benefit.link}>
-                      {t('Explore')}
+                      {language === 'sq' ? 'Eksploro' : 'Explore'}
                       <ArrowRight className="ml-2 h-3 w-3" />
                     </Link>
                   </Button>
@@ -138,10 +160,13 @@ const Index: React.FC = () => {
         <section>
           <div className="text-center mb-8">
             <h2 className="text-2xl md:text-3xl font-bold mb-2">
-              {t('Live Market Data')}
+              {language === 'sq' ? 'Të Dhënat e Tregut në Kohë Reale' : 'Live Market Data'}
             </h2>
             <p className="text-gray-600 dark:text-gray-300">
-              {t('Updated automatically twice daily at 6 AM & 6 PM')}
+              {language === 'sq' 
+                ? 'Përditësohet automatikisht dy herë në ditë në orën 6 të mëngjesit dhe 6 të mbrëmjes'
+                : 'Updated automatically twice daily at 6 AM & 6 PM'
+              }
             </p>
           </div>
           <LiveMarketData />
@@ -153,23 +178,32 @@ const Index: React.FC = () => {
             <Brain className="h-8 w-8" />
           </div>
           <h3 className="text-2xl font-bold mb-4 bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
-            {t('Powered by AI & Automation')}
+            {language === 'sq' ? 'Fuqizuar nga AI dhe Automatizimi' : 'Powered by AI & Automation'}
           </h3>
           <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mb-6">
-            {t('Our system automatically collects, validates, and analyzes market data from multiple sources using advanced AI algorithms.')}
+            {language === 'sq'
+              ? 'Sistemi ynë automatikisht mbledh, validon dhe analizon të dhënat e tregut nga burime të shumta duke përdorur algoritme të avancuara AI.'
+              : 'Our system automatically collects, validates, and analyzes market data from multiple sources using advanced AI algorithms.'
+            }
           </p>
           <div className="flex justify-center gap-8">
             <div className="text-center">
               <div className="text-2xl font-bold text-albania-red">5+</div>
-              <div className="text-sm text-gray-600 dark:text-gray-300">{t('Data Sources')}</div>
+              <div className="text-sm text-gray-600 dark:text-gray-300">
+                {language === 'sq' ? 'Burime të Dhënash' : 'Data Sources'}
+              </div>
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold text-albania-red">2x</div>
-              <div className="text-sm text-gray-600 dark:text-gray-300">{t('Daily Updates')}</div>
+              <div className="text-sm text-gray-600 dark:text-gray-300">
+                {language === 'sq' ? 'Përditësime Ditore' : 'Daily Updates'}
+              </div>
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold text-albania-red">24/7</div>
-              <div className="text-sm text-gray-600 dark:text-gray-300">{t('Monitoring')}</div>
+              <div className="text-sm text-gray-600 dark:text-gray-300">
+                {language === 'sq' ? 'Monitorim' : 'Monitoring'}
+              </div>
             </div>
           </div>
         </section>
