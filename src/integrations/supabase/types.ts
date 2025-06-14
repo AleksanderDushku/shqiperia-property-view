@@ -45,6 +45,51 @@ export type Database = {
         }
         Relationships: []
       }
+      market_data: {
+        Row: {
+          average_price_per_sqm: number
+          created_at: string
+          date: string
+          growth_regions: string[]
+          id: string
+          market_sentiment: string
+          most_active_region: string
+          opportunity_index: number
+          quarterly_change: number
+          total_listings: number
+          updated_at: string
+          yearly_change: number
+        }
+        Insert: {
+          average_price_per_sqm: number
+          created_at?: string
+          date?: string
+          growth_regions: string[]
+          id?: string
+          market_sentiment: string
+          most_active_region: string
+          opportunity_index: number
+          quarterly_change: number
+          total_listings: number
+          updated_at?: string
+          yearly_change: number
+        }
+        Update: {
+          average_price_per_sqm?: number
+          created_at?: string
+          date?: string
+          growth_regions?: string[]
+          id?: string
+          market_sentiment?: string
+          most_active_region?: string
+          opportunity_index?: number
+          quarterly_change?: number
+          total_listings?: number
+          updated_at?: string
+          yearly_change?: number
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -129,12 +174,51 @@ export type Database = {
         }
         Relationships: []
       }
+      regional_prices: {
+        Row: {
+          created_at: string
+          date: string
+          id: string
+          luxury_percentage: number
+          market_activity: string
+          price_per_sqm: number
+          property_count: number
+          quarterly_change: number
+          region: string
+        }
+        Insert: {
+          created_at?: string
+          date?: string
+          id?: string
+          luxury_percentage: number
+          market_activity: string
+          price_per_sqm: number
+          property_count: number
+          quarterly_change: number
+          region: string
+        }
+        Update: {
+          created_at?: string
+          date?: string
+          id?: string
+          luxury_percentage?: number
+          market_activity?: string
+          price_per_sqm?: number
+          property_count?: number
+          quarterly_change?: number
+          region?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      update_daily_market_data: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
     }
     Enums: {
       [_ in never]: never
