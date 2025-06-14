@@ -6,8 +6,9 @@ import { TrendingUp, TrendingDown, Activity, BarChart3, MapPin, Database } from 
 import { supabase } from '../../integrations/supabase/client';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { LoadingSkeleton } from '../ui/loading-skeleton';
-import { StatsDisplay } from '../ui/stats-display';
 import { DataUpdateStatus } from '../ui/data-update-status';
+import { AIAnalysisIndicator } from '../ui/ai-analysis-indicator';
+import { ModernStatsCard } from '../ui/modern-stats-card';
 
 interface MarketData {
   id: string;
@@ -43,7 +44,6 @@ const LiveMarketData: React.FC = () => {
 
       if (error) throw error;
       
-      // Type assertion to ensure market_sentiment matches our expected type
       const typed_data: MarketData = {
         ...data,
         market_sentiment: data.market_sentiment as 'bullish' | 'bearish' | 'neutral'
@@ -60,9 +60,9 @@ const LiveMarketData: React.FC = () => {
 
   const get_sentiment_color = (sentiment: string) => {
     switch (sentiment) {
-      case 'bullish': return 'bg-green-100 text-green-800 border-green-200';
-      case 'bearish': return 'bg-red-100 text-red-800 border-red-200';
-      default: return 'bg-yellow-100 text-yellow-800 border-yellow-200';
+      case 'bullish': return 'bg-green-100 text-green-800 border-green-200 dark:bg-green-900/30 dark:text-green-400';
+      case 'bearish': return 'bg-red-100 text-red-800 border-red-200 dark:bg-red-900/30 dark:text-red-400';
+      default: return 'bg-yellow-100 text-yellow-800 border-yellow-200 dark:bg-yellow-900/30 dark:text-yellow-400';
     }
   };
 
@@ -85,7 +85,7 @@ const LiveMarketData: React.FC = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {[...Array(4)].map((_, i) => (
-            <Card key={i} className="h-40">
+            <Card key={i} className="h-48">
               <CardContent className="p-6">
                 <LoadingSkeleton rows={3} />
               </CardContent>
@@ -98,99 +98,115 @@ const LiveMarketData: React.FC = () => {
 
   if (!market_data) {
     return (
-      <Card className="col-span-full">
-        <CardContent className="p-8 text-center">
-          <Database className="h-12 w-12 mx-auto mb-4 text-gray-400" />
-          <p className="text-gray-500 text-lg">{t('No market data available')}</p>
-          <p className="text-sm text-gray-400 mt-2">{t('Market data will be updated twice daily')}</p>
+      <Card className="col-span-full bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 border-0">
+        <CardContent className="p-12 text-center">
+          <div className="p-4 rounded-full bg-gray-200 dark:bg-gray-700 w-fit mx-auto mb-6">
+            <Database className="h-12 w-12 text-gray-400" />
+          </div>
+          <p className="text-gray-500 text-xl font-medium mb-2">{t('No market data available')}</p>
+          <p className="text-sm text-gray-400">{t('Market data will be updated twice daily')}</p>
         </CardContent>
       </Card>
     );
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <div>
-          <h2 className="text-2xl md:text-3xl font-bold mb-2">
+    <div className="space-y-8">
+      <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
+        <div className="space-y-2">
+          <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-albania-red to-red-600 bg-clip-text text-transparent">
             {t('Live Market Data')}
           </h2>
-          <p className="text-gray-600 dark:text-gray-300">
+          <p className="text-gray-600 dark:text-gray-300 text-lg">
             {t('Last updated')}: {last_updated}
           </p>
         </div>
-        <DataUpdateStatus />
+        <div className="flex flex-col gap-4">
+          <DataUpdateStatus />
+        </div>
       </div>
 
+      <AIAnalysisIndicator />
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <Card className="hover:shadow-lg transition-all duration-300 border-l-4 border-l-albania-red">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-gray-600 flex items-center">
-              <BarChart3 className="h-4 w-4 mr-2 text-albania-red" />
-              {t('Average Price')}
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <StatsDisplay
-              label=""
-              value={`€${market_data.average_price_per_sqm.toFixed(0)}/m²`}
-              change={market_data.yearly_change}
-              period={t('yearly')}
-            />
-          </CardContent>
-        </Card>
+        <ModernStatsCard
+          title={t('Average Price')}
+          value={`€${market_data.average_price_per_sqm.toFixed(0)}/m²`}
+          change={market_data.yearly_change}
+          period={t('yearly')}
+          icon={<BarChart3 className="h-6 w-6" />}
+          gradient="from-albania-red to-red-600"
+          badge={t('Per m²')}
+        />
 
-        <Card className="hover:shadow-lg transition-all duration-300 border-l-4 border-l-blue-500">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-gray-600 flex items-center">
-              <Activity className="h-4 w-4 mr-2 text-blue-500" />
-              {t('Total Listings')}
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <StatsDisplay
-              label=""
-              value={market_data.total_listings.toLocaleString()}
-              change={market_data.quarterly_change}
-              period={t('quarterly')}
-            />
-          </CardContent>
-        </Card>
+        <ModernStatsCard
+          title={t('Total Listings')}
+          value={market_data.total_listings.toLocaleString()}
+          change={market_data.quarterly_change}
+          period={t('quarterly')}
+          icon={<Activity className="h-6 w-6" />}
+          gradient="from-blue-500 to-indigo-600"
+          badge={t('Active')}
+        />
 
-        <Card className="hover:shadow-lg transition-all duration-300 border-l-4 border-l-green-500">
+        <Card className="group relative overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 border-0">
+          <div className="absolute inset-0 bg-gradient-to-br from-green-500 to-emerald-600 opacity-5 group-hover:opacity-10 transition-opacity"></div>
+          <div className="h-1 bg-gradient-to-r from-green-500 to-emerald-600"></div>
+          
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-gray-600">
+            <div className="flex items-center justify-between">
+              <div className="p-3 rounded-xl bg-gradient-to-br from-green-500 to-emerald-600 text-white shadow-lg group-hover:scale-110 transition-transform duration-300">
+                <TrendingUp className="h-6 w-6" />
+              </div>
+            </div>
+            <CardTitle className="text-sm font-medium text-gray-600 dark:text-gray-300 group-hover:text-gray-800 dark:group-hover:text-gray-100 transition-colors">
               {t('Market Sentiment')}
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <Badge className={`${get_sentiment_color(market_data.market_sentiment)} flex items-center w-fit mb-3 border`}>
+          
+          <CardContent className="pt-0">
+            <Badge className={`${get_sentiment_color(market_data.market_sentiment)} flex items-center w-fit mb-4 border shadow-sm`}>
               {get_sentiment_icon(market_data.market_sentiment)}
-              <span className="ml-1 capitalize">{market_data.market_sentiment}</span>
+              <span className="ml-2 capitalize font-medium">{market_data.market_sentiment}</span>
             </Badge>
-            <div className="text-sm text-gray-500 flex items-center">
-              <MapPin className="h-3 w-3 mr-1" />
-              {t('Most Active')}: {market_data.most_active_region}
+            <div className="text-sm text-gray-500 dark:text-gray-400 flex items-center bg-gray-50 dark:bg-gray-800 p-2 rounded-lg">
+              <MapPin className="h-3 w-3 mr-1 text-albania-red" />
+              <span className="font-medium">{t('Most Active')}: {market_data.most_active_region}</span>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="hover:shadow-lg transition-all duration-300 border-l-4 border-l-purple-500">
+        <Card className="group relative overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 border-0">
+          <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-violet-600 opacity-5 group-hover:opacity-10 transition-opacity"></div>
+          <div className="h-1 bg-gradient-to-r from-purple-500 to-violet-600"></div>
+          
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-gray-600">
+            <div className="flex items-center justify-between">
+              <div className="p-3 rounded-xl bg-gradient-to-br from-purple-500 to-violet-600 text-white shadow-lg group-hover:scale-110 transition-transform duration-300">
+                <TrendingUp className="h-6 w-6" />
+              </div>
+              <Badge variant="secondary" className="text-xs font-medium">
+                {t('AI Score')}
+              </Badge>
+            </div>
+            <CardTitle className="text-sm font-medium text-gray-600 dark:text-gray-300 group-hover:text-gray-800 dark:group-hover:text-gray-100 transition-colors">
               {t('Opportunity Index')}
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold mb-2">{market_data.opportunity_index}/100</div>
-            <div className="w-full bg-gray-200 rounded-full h-3 mb-3">
+          
+          <CardContent className="pt-0">
+            <div className="text-3xl font-bold text-gray-900 dark:text-white mb-3 group-hover:scale-105 transition-transform">
+              {market_data.opportunity_index}/100
+            </div>
+            <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 mb-4 shadow-inner">
               <div 
-                className="bg-gradient-to-r from-albania-red to-red-600 h-3 rounded-full transition-all duration-500"
+                className="bg-gradient-to-r from-purple-500 to-violet-600 h-3 rounded-full transition-all duration-1000 shadow-lg"
                 style={{ width: `${market_data.opportunity_index}%` }}
               ></div>
             </div>
-            <div className="text-xs text-gray-500">
-              {t('Growth regions')}: {market_data.growth_regions.join(', ')}
+            <div className="text-xs text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-800 p-2 rounded-lg">
+              <span className="font-medium">{t('Growth regions')}: </span>
+              {market_data.growth_regions.join(', ')}
             </div>
           </CardContent>
         </Card>
