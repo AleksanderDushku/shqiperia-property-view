@@ -10,6 +10,7 @@ interface LanguageContextType {
   t: (key: string) => string;
   language: string;
   setLanguage: (lang: string) => void;
+  toggleLanguage: () => void;
 }
 
 // Create the context
@@ -357,9 +358,14 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
     const currentTranslations = translations[language as keyof typeof translations] || translations.sq;
     return currentTranslations[key] || key;
   };
+
+  // Toggle function to switch between languages
+  const toggleLanguage = () => {
+    setLanguage(prevLang => prevLang === 'sq' ? 'en' : 'sq');
+  };
   
   return (
-    <LanguageContext.Provider value={{ t, language, setLanguage }}>
+    <LanguageContext.Provider value={{ t, language, setLanguage, toggleLanguage }}>
       {children}
     </LanguageContext.Provider>
   );
