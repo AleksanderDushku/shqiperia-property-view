@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { Badge } from '../ui/badge';
 import { Button } from '../ui/button';
 import { TrendingUp, BarChart3, Activity, MapPin, Building } from 'lucide-react';
 import { useLanguage } from '../../contexts/LanguageContext';
 import 'leaflet/dist/leaflet.css';
-import L from 'leaflet';
+import L, { Map as LeafletMap } from 'leaflet';
 import MapModeToggle from './MapModeToggle';
 
 // Fix for default markers in react-leaflet
@@ -43,22 +43,18 @@ const albanianCities: CityData[] = [
   { id: 'lezhe', name: 'Lezhë', nameEn: 'Lezhe', price_per_sqm: 720, hot_percentage: 58, growth_rate: 2.8, properties_count: 190, coordinates: { lat: 41.7836, lng: 19.6436 }, trend: 'stable', activity_level: 'low' }
 ];
 
-const MapController = ({ selectedCity }: { selectedCity: CityData | null }) => {
-  const map = useMap();
-  
-  React.useEffect(() => {
-    if (selectedCity) {
-      map.flyTo([selectedCity.coordinates.lat, selectedCity.coordinates.lng], 11);
-    }
-  }, [selectedCity]);
-  
-  return null;
-};
-
 const AlbanianCitiesMap: React.FC = () => {
   const { language } = useLanguage();
   const [selected_city, set_selected_city] = useState<CityData | null>(albanianCities[0]);
   const [map_style, set_map_style] = useState<string>('street');
+  const mapRef = useRef<LeafletMap>(null);
+
+  useEffect(() => {
+    // When a city is selected, fly to its location on the map.
+    if (mapRef.current && selected_city) {
+      mapRef.current.flyTo([selected_city.coordinates.lat, selected_city.coordinates.lng], 11);
+    }
+  }, [selected_city]);
 
   const get_hot_color = (percentage: number) => {
     if (percentage >= 90) return 'from-red-500 to-orange-600';
@@ -108,6 +104,7 @@ const AlbanianCitiesMap: React.FC = () => {
             <CardContent className="relative h-full p-0">
               <div className="h-full w-full relative">
                 <MapContainer
+                  ref={mapRef}
                   center={[41.1, 19.9]}
                   zoom={7}
                   style={{ height: '100%', width: '100%' }}
@@ -135,7 +132,6 @@ const AlbanianCitiesMap: React.FC = () => {
                     </Marker>
                   ))}
                   
-                  <MapController selectedCity={selected_city} />
                 </MapContainer>
                 
                 <MapModeToggle mapStyle={map_style} setMapStyle={set_map_style} />
