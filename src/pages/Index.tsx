@@ -7,10 +7,11 @@ import CustomerHeroSection from '../components/hero/CustomerHeroSection';
 import BusinessBenefitsSection from '../components/sections/BusinessBenefitsSection';
 import SocialProofSection from '../components/sections/SocialProofSection';
 import TechnologyShowcase from '../components/sections/TechnologyShowcase';
+import AlbanianCitiesMap from '../components/map/AlbanianCitiesMap';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
 import { Button } from '../components/ui/button';
 import { Badge } from '../components/ui/badge';
-import { ArrowRight, Phone, Mail, Calendar } from 'lucide-react';
+import { ArrowRight, Phone, Mail, MapPin } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Index: React.FC = () => {
@@ -24,6 +25,28 @@ const Index: React.FC = () => {
 
       {/* Business Benefits Section */}
       <BusinessBenefitsSection />
+
+      {/* Albanian Cities Interactive Map */}
+      <section className="py-20 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <Badge className="bg-gradient-to-r from-albania-red to-red-600 text-white px-6 py-2 mb-6 text-lg font-semibold">
+              <MapPin className="h-5 w-5 mr-2" />
+              {language === 'sq' ? 'Harta Interaktive' : 'Interactive Map'}
+            </Badge>
+            <h2 className="text-3xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-albania-red to-red-600 bg-clip-text text-transparent">
+              {language === 'sq' ? 'Qytetet e Shqipërisë' : 'Albanian Cities'}
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              {language === 'sq' 
+                ? 'Eksploroni çmimet e pronave dhe statistikat për çdo qytet të Shqipërisë'
+                : 'Explore property prices and statistics for every Albanian city'
+              }
+            </p>
+          </div>
+          <AlbanianCitiesMap />
+        </div>
+      </section>
 
       {/* Live Market Data Preview */}
       <section className="py-16 bg-white">
@@ -76,13 +99,14 @@ const Index: React.FC = () => {
           <div className="flex flex-col sm:flex-row gap-6 justify-center mb-12">
             <Button asChild size="lg" className="bg-white text-albania-red hover:bg-gray-100 font-bold px-10 py-4">
               <Link to="/market">
-                {language === 'sq' ? 'Filloni Falas' : 'Start Free Trial'}
+                {language === 'sq' ? 'Eksploro Tregut' : 'Explore Market'}
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
-            <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10 font-semibold px-10 py-4">
-              <Phone className="mr-2 h-5 w-5" />
-              {language === 'sq' ? 'Na Kontaktoni' : 'Contact Sales'}
+            <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-white/10 font-semibold px-10 py-4">
+              <Link to="/analysis">
+                {language === 'sq' ? 'Shiko Analizat' : 'View Analysis'}
+              </Link>
             </Button>
           </div>
 
@@ -96,8 +120,8 @@ const Index: React.FC = () => {
               <span>+355 69 123 4567</span>
             </div>
             <div className="flex items-center gap-2">
-              <Calendar className="h-4 w-4" />
-              <span>{language === 'sq' ? 'Demo Falas 30 min' : 'Free 30min Demo'}</span>
+              <MapPin className="h-4 w-4" />
+              <span>{language === 'sq' ? 'Analizë Falas' : 'Free Analysis'}</span>
             </div>
           </div>
         </div>

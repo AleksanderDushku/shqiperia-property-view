@@ -55,21 +55,21 @@ const CustomerHeroSection: React.FC = () => {
           {/* Main Headline */}
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight">
             <span className="block">
-              {language === 'sq' ? 'Transformoni' : 'Transform Your'}
+              {language === 'sq' ? 'Zbuloni' : 'Discover'}
             </span>
             <span className="block bg-gradient-to-r from-yellow-300 to-orange-300 bg-clip-text text-transparent">
-              {language === 'sq' ? 'Biznesin tuaj' : 'Real Estate'}
+              {language === 'sq' ? 'Tregun e Pronave' : 'Real Estate Market'}
             </span>
             <span className="block text-3xl md:text-4xl lg:text-5xl font-normal mt-4 opacity-95">
-              {language === 'sq' ? 'të Pronave me AI' : 'Business with AI'}
+              {language === 'sq' ? 'në Shqipëri' : 'in Albania'}
             </span>
           </h1>
           
           {/* Value Proposition */}
           <p className="text-xl md:text-2xl opacity-95 max-w-4xl mx-auto mb-12 leading-relaxed">
             {language === 'sq' 
-              ? 'Merrni vendimet e duhura të investimit me analizat më të avancuara të tregut, të dhënat në kohë reale dhe inteligjencën artificiale.'
-              : 'Make smarter investment decisions with advanced market analytics, real-time data, and artificial intelligence insights.'
+              ? 'Analizoni çmimet e pronave, trendet e tregut dhe mundësitë e investimit në të gjithë Shqipërinë me të dhëna të përditësuara në kohë reale.'
+              : 'Analyze property prices, market trends and investment opportunities across Albania with real-time updated data.'
             }
           </p>
           
@@ -77,13 +77,13 @@ const CustomerHeroSection: React.FC = () => {
           <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16">
             <Button asChild size="lg" className="bg-white text-albania-red hover:bg-gray-100 font-bold px-10 py-4 text-lg shadow-2xl transform hover:scale-105 transition-all duration-300">
               <Link to="/market">
-                {language === 'sq' ? 'Filloni Falas Tani' : 'Start Free Now'}
+                {language === 'sq' ? 'Eksploro Tregut' : 'Explore Market'}
                 <ArrowRight className="ml-3 h-5 w-5" />
               </Link>
             </Button>
             <Button asChild size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10 font-semibold px-10 py-4 text-lg backdrop-blur-sm">
-              <Link to="/saas">
-                {language === 'sq' ? 'Shiko Paketat' : 'View Pricing'}
+              <Link to="/analysis">
+                {language === 'sq' ? 'Shiko Analizat' : 'View Analysis'}
               </Link>
             </Button>
           </div>

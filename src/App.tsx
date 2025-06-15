@@ -12,7 +12,6 @@ import NotFound from "./pages/NotFound";
 import Calculator from "./pages/Calculator";
 import Neighborhoods from "./pages/Neighborhoods";
 import Auth from "./pages/Auth";
-import SAAS from './pages/SAAS';
 import { LanguageProvider } from "./contexts/LanguageContext";
 import { DarkModeProvider } from "./contexts/DarkModeContext";
 import { AuthProvider } from "./contexts/AuthContext";
@@ -38,7 +37,6 @@ const App: React.FC = () => {
                   <Route path="/calculator" element={<Calculator />} />
                   <Route path="/about" element={<About />} />
                   <Route path="/auth" element={<Auth />} />
-                  <Route path="/saas" element={<SAAS />} />
                   <Route path="/404" element={<NotFound />} />
                   <Route path="*" element={<Navigate to="/404" replace />} />
                 </Routes>
