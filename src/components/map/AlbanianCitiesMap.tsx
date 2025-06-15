@@ -232,10 +232,7 @@ const AlbanianCitiesMap: React.FC = () => {
                       key={city.id}
                       className="flex items-center justify-between p-4 bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl hover:from-gray-100 hover:to-gray-200 cursor-pointer transition-all duration-300 border border-gray-200"
                       onClick={() => {
-                        set_selected_city(city)
-                        if(map_ref.current) {
-                            map_ref.current.flyTo({ center: [city.coordinates.lng, city.coordinates.lat], zoom: 11 });
-                        }
+                        set_selected_city(city);
                       }}
                     >
                       <div className="flex items-center gap-4">
