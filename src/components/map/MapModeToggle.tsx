@@ -9,14 +9,14 @@ interface MapModeToggleProps {
 }
 
 const MapModeToggle: React.FC<MapModeToggleProps> = ({ mapStyle, setMapStyle }) => {
-  const isSatellite = mapStyle.includes('satellite');
+  const isSatellite = mapStyle === 'satellite';
 
   const handleToggle = (checked: boolean) => {
-    setMapStyle(checked ? 'mapbox://styles/mapbox/satellite-streets-v12' : 'mapbox://styles/mapbox/streets-v12');
+    setMapStyle(checked ? 'satellite' : 'street');
   };
 
   return (
-    <div className="absolute top-4 right-4 bg-white/95 backdrop-blur-sm rounded-xl p-2 shadow-xl border border-gray-200 z-10 flex items-center gap-3">
+    <div className="absolute top-4 right-4 bg-white/95 backdrop-blur-sm rounded-xl p-2 shadow-xl border border-gray-200 z-[1000] flex items-center gap-3">
       <Map className={`h-5 w-5 transition-colors ${!isSatellite ? 'text-albania-red' : 'text-gray-500'}`} />
       <Switch
         id="map-mode"

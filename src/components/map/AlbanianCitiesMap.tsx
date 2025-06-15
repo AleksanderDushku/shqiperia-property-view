@@ -1,14 +1,21 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { Badge } from '../ui/badge';
 import { Button } from '../ui/button';
 import { TrendingUp, BarChart3, Activity, MapPin, Building } from 'lucide-react';
 import { useLanguage } from '../../contexts/LanguageContext';
-import mapboxgl from 'mapbox-gl';
-import 'mapbox-gl/dist/mapbox-gl.css';
+import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
 import MapModeToggle from './MapModeToggle';
-import { Input } from '../ui/input';
-import { Label } from '../ui/label';
+
+// Fix for default markers in react-leaflet
+delete (L.Icon.Default.prototype as any)._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
+  iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+});
 
 interface CityData {
   id: string;
@@ -36,15 +43,22 @@ const albanianCities: CityData[] = [
   { id: 'lezhe', name: 'Lezhë', nameEn: 'Lezhe', price_per_sqm: 720, hot_percentage: 58, growth_rate: 2.8, properties_count: 190, coordinates: { lat: 41.7836, lng: 19.6436 }, trend: 'stable', activity_level: 'low' }
 ];
 
+const MapController = ({ selectedCity }: { selectedCity: CityData | null }) => {
+  const map = useMap();
+  
+  React.useEffect(() => {
+    if (selectedCity) {
+      map.flyTo([selectedCity.coordinates.lat, selectedCity.coordinates.lng], 11);
+    }
+  }, [selectedCity, map]);
+  
+  return null;
+};
+
 const AlbanianCitiesMap: React.FC = () => {
   const { language } = useLanguage();
   const [selected_city, set_selected_city] = useState<CityData | null>(albanianCities[0]);
-  const [mapbox_token, set_mapbox_token] = useState<string>('');
-  const [map_style, set_map_style] = useState<string>('mapbox://styles/mapbox/streets-v12');
-
-  const map_container_ref = useRef<HTMLDivElement>(null);
-  const map_ref = useRef<mapboxgl.Map | null>(null);
-  const markers_ref = useRef<mapboxgl.Marker[]>([]);
+  const [map_style, set_map_style] = useState<string>('street');
 
   const get_hot_color = (percentage: number) => {
     if (percentage >= 90) return 'from-red-500 to-orange-600';
@@ -61,81 +75,27 @@ const AlbanianCitiesMap: React.FC = () => {
     }
   };
 
-  const add_markers_to_map = (map: mapboxgl.Map) => {
-    // Clear existing markers
-    markers_ref.current.forEach(marker => marker.remove());
-    markers_ref.current = [];
-
-    albanianCities.forEach((city) => {
-      const el = document.createElement('div');
-      el.className = `w-10 h-10 rounded-full bg-gradient-to-r ${get_hot_color(city.hot_percentage)} shadow-xl border-2 border-white flex items-center justify-center text-white text-xs font-bold transition-all duration-300 cursor-pointer hover:scale-110`;
-      el.innerText = `${city.hot_percentage}%`;
-
-      const popup = new mapboxgl.Popup({ offset: 35, closeButton: false })
-        .setHTML(`<div class="font-bold">${language === 'sq' ? city.name : city.nameEn}</div><div>€${city.price_per_sqm}/m²</div>`);
-
-      const marker = new mapboxgl.Marker(el)
-        .setLngLat([city.coordinates.lng, city.coordinates.lat])
-        .setPopup(popup)
-        .addTo(map);
-      
-      marker.getElement().addEventListener('click', () => {
-        set_selected_city(city);
-        map.flyTo({ center: [city.coordinates.lng, city.coordinates.lat], zoom: 11 });
-      });
-
-      marker.getElement().addEventListener('mouseenter', () => marker.togglePopup());
-      marker.getElement().addEventListener('mouseleave', () => marker.togglePopup());
-      markers_ref.current.push(marker);
+  const create_custom_icon = (city: CityData) => {
+    const color = city.hot_percentage >= 90 ? '#ef4444' : 
+                  city.hot_percentage >= 75 ? '#f97316' : 
+                  city.hot_percentage >= 60 ? '#eab308' : '#3b82f6';
+    
+    return L.divIcon({
+      html: `<div style="background: ${color}; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 10px; border: 2px solid white; box-shadow: 0 2px 8px rgba(0,0,0,0.3);">${city.hot_percentage}%</div>`,
+      className: 'custom-div-icon',
+      iconSize: [40, 40],
+      iconAnchor: [20, 20],
     });
   };
 
-  useEffect(() => {
-    if (map_ref.current) { // If map already exists
-      map_ref.current.setStyle(map_style);
-    } else if (mapbox_token && map_container_ref.current) { // If map is being initialized
-      mapboxgl.accessToken = mapbox_token;
-      const map = new mapboxgl.Map({
-        container: map_container_ref.current,
-        style: map_style,
-        center: [19.9, 41.1],
-        zoom: 6.5,
-      });
-      map_ref.current = map;
-    }
-
-    const map = map_ref.current;
-    if(map) {
-      map.on('style.load', () => {
-        add_markers_to_map(map);
-      });
-      map.on('load', () => {
-        add_markers_to_map(map);
-      });
-    }
-
-    return () => {
-      // Don't remove map on style change
-    };
-  }, [mapbox_token, map_style]);
+  // Map tile URLs
+  const tile_urls = {
+    street: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    satellite: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
+  };
 
   return (
     <div className="space-y-4">
-      <Card>
-        <CardContent className="p-4">
-            <Label htmlFor="mapbox-token">Mapbox Access Token</Label>
-            <Input
-                id="mapbox-token"
-                type="password"
-                value={mapbox_token}
-                onChange={(e) => set_mapbox_token(e.target.value)}
-                placeholder="Enter your Mapbox public token"
-            />
-            <p className="text-xs text-gray-500 mt-1">
-                Required to display the interactive map. Get a free token from <a href="https://mapbox.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">mapbox.com</a>.
-            </p>
-        </CardContent>
-      </Card>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2">
           <Card className="h-[600px] bg-gradient-to-br from-blue-50 to-indigo-100 border-2 border-albania-red/20">
@@ -146,18 +106,40 @@ const AlbanianCitiesMap: React.FC = () => {
               </CardTitle>
             </CardHeader>
             <CardContent className="relative h-full p-0">
-              {mapbox_token ? (
-                 <div ref={map_container_ref} className="absolute inset-0">
-                    <MapModeToggle mapStyle={map_style} setMapStyle={set_map_style} />
-                 </div>
-              ) : (
-                <div className="flex items-center justify-center h-full">
-                    <div className="text-center text-gray-500">
-                        <Building className="h-12 w-12 mx-auto mb-2"/>
-                        <p>Please enter a Mapbox token to view the map.</p>
-                    </div>
-                </div>
-              )}
+              <div className="h-full w-full relative">
+                <MapContainer
+                  center={[41.1, 19.9]}
+                  zoom={7}
+                  style={{ height: '100%', width: '100%' }}
+                  zoomControl={true}
+                >
+                  <TileLayer
+                    url={tile_urls[map_style as keyof typeof tile_urls]}
+                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                  />
+                  
+                  {albanianCities.map(city => (
+                    <Marker
+                      key={city.id}
+                      position={[city.coordinates.lat, city.coordinates.lng]}
+                      icon={create_custom_icon(city)}
+                      eventHandlers={{
+                        click: () => set_selected_city(city)
+                      }}
+                    >
+                      <Popup>
+                        <div className="font-bold">{language === 'sq' ? city.name : city.nameEn}</div>
+                        <div>€{city.price_per_sqm}/m²</div>
+                        <div>Hot: {city.hot_percentage}%</div>
+                      </Popup>
+                    </Marker>
+                  ))}
+                  
+                  <MapController selectedCity={selected_city} />
+                </MapContainer>
+                
+                <MapModeToggle mapStyle={map_style} setMapStyle={set_map_style} />
+              </div>
             </CardContent>
           </Card>
         </div>
