@@ -255,7 +255,7 @@ const CustomBranding: React.FC = () => {
               </Button>
             </div>
           </CardContent>
-        </Car>
+        </Card>
       </div>
     </FeatureGate>
   );
