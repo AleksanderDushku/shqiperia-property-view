@@ -50,7 +50,7 @@ const MapController = ({ selectedCity }: { selectedCity: CityData | null }) => {
     if (selectedCity) {
       map.flyTo([selectedCity.coordinates.lat, selectedCity.coordinates.lng], 11);
     }
-  }, [selectedCity, map]);
+  }, [selectedCity]);
   
   return null;
 };
