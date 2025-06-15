@@ -9,7 +9,7 @@ import RegionalPriceDashboard from '../components/market/RegionalPriceDashboard'
 import { useLanguage } from '../contexts/LanguageContext';
 import { useDarkMode } from '../contexts/DarkModeContext';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
-import { Database, TrendingUp, MapPin, Calculator, Bot, Settings } from 'lucide-react';
+import { Database, TrendingUp, MapPin, Calculator, Bot, Settings, Zap } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { useIsMobile } from '../hooks/use-mobile';
 import MarketCustomization from '../components/market/MarketCustomization';
