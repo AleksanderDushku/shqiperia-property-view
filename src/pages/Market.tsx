@@ -1,5 +1,4 @@
-
-import React from 'react';
+import React, { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import MarketHeader from '../components/market/MarketHeader';
 import MarketKeyInsights from '../components/market/MarketKeyInsights';
@@ -10,119 +9,189 @@ import RegionalPriceDashboard from '../components/market/RegionalPriceDashboard'
 import { useLanguage } from '../contexts/LanguageContext';
 import { useDarkMode } from '../contexts/DarkModeContext';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
-import { Database, TrendingUp, MapPin, Calculator, BarChart3, Zap, Activity } from 'lucide-react';
+import { Database, TrendingUp, MapPin, Calculator, BarChart3, Zap, Activity, Bot, Settings, Smartphone } from 'lucide-react';
 import { Badge } from '../components/ui/badge';
+import { Button } from '../components/ui/button';
+import { useIsMobile } from '../hooks/use-mobile';
+import MarketCustomization from '../components/market/MarketCustomization';
+import MarketAIAssistant from '../components/market/MarketAIAssistant';
 
 const Market: React.FC = () => {
   const { t } = useLanguage();
   const { dark_mode } = useDarkMode();
+  const isMobile = useIsMobile();
+  const [showCustomization, setShowCustomization] = useState(false);
+  const [showAIAssistant, setShowAIAssistant] = useState(false);
 
   return (
-    <div className={`min-h-screen ${dark_mode ? 'bg-gradient-to-br from-gray-900 via-gray-800 to-albania-red/10' : 'bg-gradient-to-br from-gray-50 via-white to-albania-red/5'} py-8`}>
-      <div className="container mx-auto px-4">
-        {/* Enhanced Header with Albanian focus */}
-        <div className="mb-12">
-          <div className="text-center mb-8">
-            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-albania-red to-red-600 text-white px-6 py-3 rounded-full shadow-lg mb-6">
-              <Zap className="h-5 w-5 animate-pulse" />
-              <span className="font-semibold">{t('Live Market Data')} - {t('Albania')}</span>
+    <div className={`min-h-screen ${dark_mode ? 'bg-gradient-to-br from-gray-900 via-gray-800 to-albania-red/10' : 'bg-gradient-to-br from-gray-50 via-white to-albania-red/5'} ${isMobile ? 'py-4' : 'py-8'}`}>
+      <div className={`container mx-auto ${isMobile ? 'px-3' : 'px-4'}`}>
+        {/* Enhanced Mobile-Friendly Header */}
+        <div className={`mb-${isMobile ? '8' : '12'}`}>
+          <div className="text-center mb-6">
+            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-albania-red to-red-600 text-white px-4 py-2 rounded-full shadow-lg mb-4">
+              <Zap className={`${isMobile ? 'h-4 w-4' : 'h-5 w-5'} animate-pulse`} />
+              <span className={`font-semibold ${isMobile ? 'text-sm' : 'text-base'}`}>
+                {t('Live Market Data')} - {t('Albania')}
+              </span>
             </div>
-            <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-albania-red via-red-600 to-red-800 bg-clip-text text-transparent mb-4">
+            
+            {/* Mobile Action Buttons */}
+            <div className="flex justify-center gap-2 mb-4">
+              <Button
+                size={isMobile ? "sm" : "default"}
+                variant="outline"
+                onClick={() => setShowCustomization(!showCustomization)}
+                className="flex items-center gap-2"
+              >
+                <Settings className="h-4 w-4" />
+                {!isMobile && <span>{t('Customize')}</span>}
+              </Button>
+              <Button
+                size={isMobile ? "sm" : "default"}
+                variant="outline"
+                onClick={() => setShowAIAssistant(!showAIAssistant)}
+                className="flex items-center gap-2 bg-gradient-to-r from-purple-500 to-indigo-600 text-white border-0"
+              >
+                <Bot className="h-4 w-4" />
+                {!isMobile && <span>{t('AI Assistant')}</span>}
+              </Button>
+            </div>
+            
+            <h1 className={`${isMobile ? 'text-2xl md:text-4xl' : 'text-4xl md:text-6xl'} font-bold bg-gradient-to-r from-albania-red via-red-600 to-red-800 bg-clip-text text-transparent mb-4`}>
               {t('Tregu i Pronave')}
             </h1>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
+            <p className={`${isMobile ? 'text-base' : 'text-xl'} text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed px-4`}>
               {t('Analiza profesionale e tregut e përditësuar dy herë në ditë në orën 6 të mëngjesit dhe 6 të mbrëmjes')}
             </p>
           </div>
           
           <MarketHeader />
           
-          {/* Albanian Market Stats Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mt-8">
+          {/* Mobile-Optimized Albanian Market Stats Cards */}
+          <div className={`grid ${isMobile ? 'grid-cols-2 gap-3' : 'grid-cols-1 md:grid-cols-4 gap-6'} mt-6`}>
             <Card className="bg-gradient-to-br from-red-50 to-albania-red/10 border-albania-red/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <CardContent className="p-6 text-center">
-                <div className="p-4 bg-gradient-to-br from-albania-red to-red-600 text-white rounded-full w-fit mx-auto mb-4 shadow-lg">
-                  <BarChart3 className="h-8 w-8" />
+              <CardContent className={`${isMobile ? 'p-4' : 'p-6'} text-center`}>
+                <div className={`p-3 bg-gradient-to-br from-albania-red to-red-600 text-white rounded-full w-fit mx-auto mb-3 shadow-lg`}>
+                  <BarChart3 className={`${isMobile ? 'h-5 w-5' : 'h-8 w-8'}`} />
                 </div>
-                <h3 className="text-2xl font-bold text-albania-red mb-2">1,247</h3>
-                <p className="text-sm text-gray-600 font-medium">{t('Prona Aktive')}</p>
-                <Badge className="mt-2 bg-green-100 text-green-800 border-green-200">+12%</Badge>
+                <h3 className={`${isMobile ? 'text-lg' : 'text-2xl'} font-bold text-albania-red mb-2`}>1,247</h3>
+                <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-gray-600 font-medium`}>{t('Prona Aktive')}</p>
+                <Badge className="mt-2 bg-green-100 text-green-800 border-green-200 text-xs">+12%</Badge>
               </CardContent>
             </Card>
 
             <Card className="bg-gradient-to-br from-green-50 to-emerald-100 border-green-200 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <CardContent className="p-6 text-center">
-                <div className="p-4 bg-gradient-to-br from-green-500 to-emerald-600 text-white rounded-full w-fit mx-auto mb-4 shadow-lg">
-                  <TrendingUp className="h-8 w-8" />
+              <CardContent className={`${isMobile ? 'p-4' : 'p-6'} text-center`}>
+                <div className={`p-3 bg-gradient-to-br from-green-500 to-emerald-600 text-white rounded-full w-fit mx-auto mb-3 shadow-lg`}>
+                  <TrendingUp className={`${isMobile ? 'h-5 w-5' : 'h-8 w-8'}`} />
                 </div>
-                <h3 className="text-2xl font-bold text-green-700 mb-2">€1,850</h3>
-                <p className="text-sm text-gray-600 font-medium">{t('Çmimi Mesatar/m²')}</p>
-                <Badge className="mt-2 bg-green-100 text-green-800 border-green-200">+8.5%</Badge>
+                <h3 className={`${isMobile ? 'text-lg' : 'text-2xl'} font-bold text-green-700 mb-2`}>€1,850</h3>
+                <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-gray-600 font-medium`}>{t('Çmimi Mesatar/m²')}</p>
+                <Badge className="mt-2 bg-green-100 text-green-800 border-green-200 text-xs">+8.5%</Badge>
               </CardContent>
             </Card>
 
             <Card className="bg-gradient-to-br from-blue-50 to-indigo-100 border-blue-200 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <CardContent className="p-6 text-center">
-                <div className="p-4 bg-gradient-to-br from-blue-500 to-indigo-600 text-white rounded-full w-fit mx-auto mb-4 shadow-lg">
-                  <MapPin className="h-8 w-8" />
+              <CardContent className={`${isMobile ? 'p-4' : 'p-6'} text-center`}>
+                <div className={`p-3 bg-gradient-to-br from-blue-500 to-indigo-600 text-white rounded-full w-fit mx-auto mb-3 shadow-lg`}>
+                  <MapPin className={`${isMobile ? 'h-5 w-5' : 'h-8 w-8'}`} />
                 </div>
-                <h3 className="text-2xl font-bold text-blue-700 mb-2">{t('Tiranë')}</h3>
-                <p className="text-sm text-gray-600 font-medium">{t('Rajoni më Aktiv')}</p>
-                <Badge className="mt-2 bg-blue-100 text-blue-800 border-blue-200">{t('Nr. 1')}</Badge>
+                <h3 className={`${isMobile ? 'text-lg' : 'text-2xl'} font-bold text-blue-700 mb-2`}>{t('Tiranë')}</h3>
+                <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-gray-600 font-medium`}>{t('Rajoni më Aktiv')}</p>
+                <Badge className="mt-2 bg-blue-100 text-blue-800 border-blue-200 text-xs">{t('Nr. 1')}</Badge>
               </CardContent>
             </Card>
 
             <Card className="bg-gradient-to-br from-purple-50 to-violet-100 border-purple-200 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <CardContent className="p-6 text-center">
-                <div className="p-4 bg-gradient-to-br from-purple-500 to-violet-600 text-white rounded-full w-fit mx-auto mb-4 shadow-lg">
-                  <Activity className="h-8 w-8" />
+              <CardContent className={`${isMobile ? 'p-4' : 'p-6'} text-center`}>
+                <div className={`p-3 bg-gradient-to-br from-purple-500 to-violet-600 text-white rounded-full w-fit mx-auto mb-3 shadow-lg`}>
+                  <Activity className={`${isMobile ? 'h-5 w-5' : 'h-8 w-8'}`} />
                 </div>
-                <h3 className="text-2xl font-bold text-purple-700 mb-2">8.7/10</h3>
-                <p className="text-sm text-gray-600 font-medium">{t('Indeksi i Mundësisë')}</p>
-                <Badge className="mt-2 bg-purple-100 text-purple-800 border-purple-200">{t('I Lartë')}</Badge>
+                <h3 className={`${isMobile ? 'text-lg' : 'text-2xl'} font-bold text-purple-700 mb-2`}>8.7/10</h3>
+                <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-gray-600 font-medium`}>{t('Indeksi i Mundësisë')}</p>
+                <Badge className="mt-2 bg-purple-100 text-purple-800 border-purple-200 text-xs">{t('I Lartë')}</Badge>
               </CardContent>
             </Card>
           </div>
         </div>
 
-        {/* Key Market Insights */}
-        <div className="mb-12">
+        {/* Customization Panel */}
+        {showCustomization && (
+          <div className="mb-8">
+            <MarketCustomization />
+          </div>
+        )}
+
+        {/* AI Assistant Panel */}
+        {showAIAssistant && (
+          <div className="mb-8">
+            <MarketAIAssistant />
+          </div>
+        )}
+
+        {/* Key Market Insights - Mobile Optimized */}
+        <div className={`mb-${isMobile ? '8' : '12'}`}>
           <MarketKeyInsights />
         </div>
 
-        {/* Enhanced Colorful Tabs */}
-        <Tabs defaultValue="overview" className="space-y-8">
+        {/* Enhanced Mobile-Friendly Tabs */}
+        <Tabs defaultValue="overview" className="space-y-6">
           <div className="bg-white dark:bg-gray-800 rounded-2xl p-2 shadow-lg border border-gray-200 dark:border-gray-700">
-            <TabsList className="grid w-full grid-cols-4 h-auto p-1 bg-gray-50 dark:bg-gray-900">
+            <TabsList className={`grid w-full ${isMobile ? 'grid-cols-2 h-auto' : 'grid-cols-4 h-auto'} p-1 bg-gray-50 dark:bg-gray-900`}>
               <TabsTrigger 
                 value="overview" 
-                className="flex items-center gap-3 py-4 px-6 text-sm font-medium data-[state=active]:bg-gradient-to-r data-[state=active]:from-albania-red data-[state=active]:to-red-600 data-[state=active]:text-white rounded-xl transition-all duration-300"
+                className={`flex items-center gap-2 ${isMobile ? 'py-3 px-3 text-xs' : 'py-4 px-6 text-sm'} font-medium data-[state=active]:bg-gradient-to-r data-[state=active]:from-albania-red data-[state=active]:to-red-600 data-[state=active]:text-white rounded-xl transition-all duration-300`}
               >
-                <Database className="h-5 w-5" />
-                <span>{t('Përmbledhje')}</span>
+                <Database className={`${isMobile ? 'h-4 w-4' : 'h-5 w-5'}`} />
+                <span className={isMobile ? 'hidden sm:inline' : ''}>{t('Përmbledhje')}</span>
               </TabsTrigger>
               <TabsTrigger 
                 value="trends" 
-                className="flex items-center gap-3 py-4 px-6 text-sm font-medium data-[state=active]:bg-gradient-to-r data-[state=active]:from-green-500 data-[state=active]:to-emerald-600 data-[state=active]:text-white rounded-xl transition-all duration-300"
+                className={`flex items-center gap-2 ${isMobile ? 'py-3 px-3 text-xs' : 'py-4 px-6 text-sm'} font-medium data-[state=active]:bg-gradient-to-r data-[state=active]:from-green-500 data-[state=active]:to-emerald-600 data-[state=active]:text-white rounded-xl transition-all duration-300`}
               >
-                <TrendingUp className="h-5 w-5" />
-                <span>{t('Trendet')}</span>
+                <TrendingUp className={`${isMobile ? 'h-4 w-4' : 'h-5 w-5'}`} />
+                <span className={isMobile ? 'hidden sm:inline' : ''}>{t('Trendet')}</span>
               </TabsTrigger>
-              <TabsTrigger 
-                value="regional" 
-                className="flex items-center gap-3 py-4 px-6 text-sm font-medium data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-indigo-600 data-[state=active]:text-white rounded-xl transition-all duration-300"
-              >
-                <MapPin className="h-5 w-5" />
-                <span>{t('Rajonet')}</span>
-              </TabsTrigger>
-              <TabsTrigger 
-                value="investment" 
-                className="flex items-center gap-3 py-4 px-6 text-sm font-medium data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-violet-600 data-[state=active]:text-white rounded-xl transition-all duration-300"
-              >
-                <Calculator className="h-5 w-5" />
-                <span>{t('Investime')}</span>
-              </TabsTrigger>
+              {!isMobile && (
+                <>
+                  <TabsTrigger 
+                    value="regional" 
+                    className="flex items-center gap-3 py-4 px-6 text-sm font-medium data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-indigo-600 data-[state=active]:text-white rounded-xl transition-all duration-300"
+                  >
+                    <MapPin className="h-5 w-5" />
+                    <span>{t('Rajonet')}</span>
+                  </TabsTrigger>
+                  <TabsTrigger 
+                    value="investment" 
+                    className="flex items-center gap-3 py-4 px-6 text-sm font-medium data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-violet-600 data-[state=active]:text-white rounded-xl transition-all duration-300"
+                  >
+                    <Calculator className="h-5 w-5" />
+                    <span>{t('Investime')}</span>
+                  </TabsTrigger>
+                </>
+              )}
             </TabsList>
+            
+            {/* Mobile Additional Tabs */}
+            {isMobile && (
+              <TabsList className="grid w-full grid-cols-2 h-auto p-1 bg-gray-50 dark:bg-gray-900 mt-2">
+                <TabsTrigger 
+                  value="regional" 
+                  className="flex items-center gap-2 py-3 px-3 text-xs font-medium data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-indigo-600 data-[state=active]:text-white rounded-xl transition-all duration-300"
+                >
+                  <MapPin className="h-4 w-4" />
+                  <span className="hidden sm:inline">{t('Rajonet')}</span>
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="investment" 
+                  className="flex items-center gap-2 py-3 px-3 text-xs font-medium data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-violet-600 data-[state=active]:text-white rounded-xl transition-all duration-300"
+                >
+                  <Calculator className="h-4 w-4" />
+                  <span className="hidden sm:inline">{t('Investime')}</span>
+                </TabsTrigger>
+              </TabsList>
+            )}
           </div>
 
           <TabsContent value="overview" className="space-y-8">
