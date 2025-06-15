@@ -1,3 +1,4 @@
+
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -20,7 +21,7 @@ import { Toaster } from "./components/ui/toaster";
 
 const App: React.FC = () => {
   return (
-    <BrowserRouter>
+    <Router>
       <AuthProvider>
         <DarkModeProvider>
           <LanguageProvider>
@@ -48,7 +49,7 @@ const App: React.FC = () => {
           </LanguageProvider>
         </DarkModeProvider>
       </AuthProvider>
-    </BrowserRouter>
+    </Router>
   );
 };
 
