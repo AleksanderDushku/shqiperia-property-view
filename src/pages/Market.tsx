@@ -9,12 +9,12 @@ import RegionalPriceDashboard from '../components/market/RegionalPriceDashboard'
 import { useLanguage } from '../contexts/LanguageContext';
 import { useDarkMode } from '../contexts/DarkModeContext';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
-import { Database, TrendingUp, MapPin, Calculator, BarChart3, Zap, Activity, Bot, Settings, Smartphone } from 'lucide-react';
-import { Badge } from '../components/ui/badge';
+import { Database, TrendingUp, MapPin, Calculator, Bot, Settings } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { useIsMobile } from '../hooks/use-mobile';
 import MarketCustomization from '../components/market/MarketCustomization';
 import MarketAIAssistant from '../components/market/MarketAIAssistant';
+import MarketStats from '../components/market/MarketStats';
 
 const Market: React.FC = () => {
   const { t } = useLanguage();
@@ -28,6 +28,7 @@ const Market: React.FC = () => {
       <div className={`container mx-auto ${isMobile ? 'px-3' : 'px-4'}`}>
         {/* Enhanced Mobile-Friendly Header */}
         <div className={`mb-${isMobile ? '8' : '12'}`}>
+          {/* ... keep existing code (header title and buttons) */}
           <div className="text-center mb-6">
             <div className="inline-flex items-center gap-2 bg-gradient-to-r from-albania-red to-red-600 text-white px-4 py-2 rounded-full shadow-lg mb-4">
               <Zap className={`${isMobile ? 'h-4 w-4' : 'h-5 w-5'} animate-pulse`} />
@@ -68,52 +69,7 @@ const Market: React.FC = () => {
           
           <MarketHeader />
           
-          {/* Mobile-Optimized Albanian Market Stats Cards */}
-          <div className={`grid ${isMobile ? 'grid-cols-2 gap-3' : 'grid-cols-1 md:grid-cols-4 gap-6'} mt-6`}>
-            <Card className="bg-gradient-to-br from-red-50 to-albania-red/10 border-albania-red/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <CardContent className={`${isMobile ? 'p-4' : 'p-6'} text-center`}>
-                <div className={`p-3 bg-gradient-to-br from-albania-red to-red-600 text-white rounded-full w-fit mx-auto mb-3 shadow-lg`}>
-                  <BarChart3 className={`${isMobile ? 'h-5 w-5' : 'h-8 w-8'}`} />
-                </div>
-                <h3 className={`${isMobile ? 'text-lg' : 'text-2xl'} font-bold text-albania-red mb-2`}>1,247</h3>
-                <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-gray-600 font-medium`}>{t('Prona Aktive')}</p>
-                <Badge className="mt-2 bg-green-100 text-green-800 border-green-200 text-xs">+12%</Badge>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-gradient-to-br from-green-50 to-emerald-100 border-green-200 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <CardContent className={`${isMobile ? 'p-4' : 'p-6'} text-center`}>
-                <div className={`p-3 bg-gradient-to-br from-green-500 to-emerald-600 text-white rounded-full w-fit mx-auto mb-3 shadow-lg`}>
-                  <TrendingUp className={`${isMobile ? 'h-5 w-5' : 'h-8 w-8'}`} />
-                </div>
-                <h3 className={`${isMobile ? 'text-lg' : 'text-2xl'} font-bold text-green-700 mb-2`}>€1,850</h3>
-                <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-gray-600 font-medium`}>{t('Çmimi Mesatar/m²')}</p>
-                <Badge className="mt-2 bg-green-100 text-green-800 border-green-200 text-xs">+8.5%</Badge>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-gradient-to-br from-blue-50 to-indigo-100 border-blue-200 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <CardContent className={`${isMobile ? 'p-4' : 'p-6'} text-center`}>
-                <div className={`p-3 bg-gradient-to-br from-blue-500 to-indigo-600 text-white rounded-full w-fit mx-auto mb-3 shadow-lg`}>
-                  <MapPin className={`${isMobile ? 'h-5 w-5' : 'h-8 w-8'}`} />
-                </div>
-                <h3 className={`${isMobile ? 'text-lg' : 'text-2xl'} font-bold text-blue-700 mb-2`}>{t('Tiranë')}</h3>
-                <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-gray-600 font-medium`}>{t('Rajoni më Aktiv')}</p>
-                <Badge className="mt-2 bg-blue-100 text-blue-800 border-blue-200 text-xs">{t('Nr. 1')}</Badge>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-gradient-to-br from-purple-50 to-violet-100 border-purple-200 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <CardContent className={`${isMobile ? 'p-4' : 'p-6'} text-center`}>
-                <div className={`p-3 bg-gradient-to-br from-purple-500 to-violet-600 text-white rounded-full w-fit mx-auto mb-3 shadow-lg`}>
-                  <Activity className={`${isMobile ? 'h-5 w-5' : 'h-8 w-8'}`} />
-                </div>
-                <h3 className={`${isMobile ? 'text-lg' : 'text-2xl'} font-bold text-purple-700 mb-2`}>8.7/10</h3>
-                <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-gray-600 font-medium`}>{t('Indeksi i Mundësisë')}</p>
-                <Badge className="mt-2 bg-purple-100 text-purple-800 border-purple-200 text-xs">{t('I Lartë')}</Badge>
-              </CardContent>
-            </Card>
-          </div>
+          <MarketStats />
         </div>
 
         {/* Customization Panel */}
@@ -129,8 +85,7 @@ const Market: React.FC = () => {
             <MarketAIAssistant />
           </div>
         )}
-
-        {/* Key Market Insights - Mobile Optimized */}
+        {/* ... keep existing code (Key Market Insights and Tabs section) */}
         <div className={`mb-${isMobile ? '8' : '12'}`}>
           <MarketKeyInsights />
         </div>
