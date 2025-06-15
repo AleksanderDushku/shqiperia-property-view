@@ -14,62 +14,43 @@ const MarketTabs: React.FC = () => {
   const { t } = useLanguage();
   const isMobile = useIsMobile();
 
+  const tabTriggerBaseClasses = `flex items-center gap-2 ${isMobile ? 'py-3 px-3 text-xs' : 'py-4 px-6 text-sm'} font-medium rounded-xl transition-all duration-300`;
+  const iconClasses = isMobile ? 'h-4 w-4' : 'h-5 w-5';
+  const textClasses = isMobile ? 'hidden sm:inline' : '';
+
   return (
     <Tabs defaultValue="overview" className="space-y-6">
       <div className="bg-white dark:bg-gray-800 rounded-2xl p-2 shadow-lg border border-gray-200 dark:border-gray-700">
-        <TabsList className={`grid w-full ${isMobile ? 'grid-cols-2 h-auto' : 'grid-cols-4 h-auto'} p-1 bg-gray-50 dark:bg-gray-900`}>
+        <TabsList className={`grid w-full ${isMobile ? 'grid-cols-2' : 'grid-cols-4'} h-auto p-1 bg-gray-50 dark:bg-gray-900`}>
           <TabsTrigger 
             value="overview" 
-            className={`flex items-center gap-2 ${isMobile ? 'py-3 px-3 text-xs' : 'py-4 px-6 text-sm'} font-medium data-[state=active]:bg-gradient-to-r data-[state=active]:from-albania-red data-[state=active]:to-red-600 data-[state=active]:text-white rounded-xl transition-all duration-300`}
+            className={`${tabTriggerBaseClasses} data-[state=active]:bg-gradient-to-r data-[state=active]:from-albania-red data-[state=active]:to-red-600 data-[state=active]:text-white`}
           >
-            <Database className={`${isMobile ? 'h-4 w-4' : 'h-5 w-5'}`} />
-            <span className={isMobile ? 'hidden sm:inline' : ''}>{t('Përmbledhje')}</span>
+            <Database className={iconClasses} />
+            <span className={textClasses}>{t('Përmbledhje')}</span>
           </TabsTrigger>
           <TabsTrigger 
             value="trends" 
-            className={`flex items-center gap-2 ${isMobile ? 'py-3 px-3 text-xs' : 'py-4 px-6 text-sm'} font-medium data-[state=active]:bg-gradient-to-r data-[state=active]:from-green-500 data-[state=active]:to-emerald-600 data-[state=active]:text-white rounded-xl transition-all duration-300`}
+            className={`${tabTriggerBaseClasses} data-[state=active]:bg-gradient-to-r data-[state=active]:from-green-500 data-[state=active]:to-emerald-600 data-[state=active]:text-white`}
           >
-            <TrendingUp className={`${isMobile ? 'h-4 w-4' : 'h-5 w-5'}`} />
-            <span className={isMobile ? 'hidden sm:inline' : ''}>{t('Trendet')}</span>
+            <TrendingUp className={iconClasses} />
+            <span className={textClasses}>{t('Trendet')}</span>
           </TabsTrigger>
-          {!isMobile && (
-            <>
-              <TabsTrigger 
-                value="regional" 
-                className="flex items-center gap-3 py-4 px-6 text-sm font-medium data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-indigo-600 data-[state=active]:text-white rounded-xl transition-all duration-300"
-              >
-                <MapPin className="h-5 w-5" />
-                <span>{t('Rajonet')}</span>
-              </TabsTrigger>
-              <TabsTrigger 
-                value="investment" 
-                className="flex items-center gap-3 py-4 px-6 text-sm font-medium data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-violet-600 data-[state=active]:text-white rounded-xl transition-all duration-300"
-              >
-                <Calculator className="h-5 w-5" />
-                <span>{t('Investime')}</span>
-              </TabsTrigger>
-            </>
-          )}
+          <TabsTrigger 
+            value="regional" 
+            className={`${tabTriggerBaseClasses} data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-indigo-600 data-[state=active]:text-white`}
+          >
+            <MapPin className={iconClasses} />
+            <span className={textClasses}>{t('Rajonet')}</span>
+          </TabsTrigger>
+          <TabsTrigger 
+            value="investment" 
+            className={`${tabTriggerBaseClasses} data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-violet-600 data-[state=active]:text-white`}
+          >
+            <Calculator className={iconClasses} />
+            <span className={textClasses}>{t('Investime')}</span>
+          </TabsTrigger>
         </TabsList>
-        
-        {isMobile && (
-          <TabsList className="grid w-full grid-cols-2 h-auto p-1 bg-gray-50 dark:bg-gray-900 mt-2">
-            <TabsTrigger 
-              value="regional" 
-              className="flex items-center gap-2 py-3 px-3 text-xs font-medium data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-indigo-600 data-[state=active]:text-white rounded-xl transition-all duration-300"
-            >
-              <MapPin className="h-4 w-4" />
-              <span className="hidden sm:inline">{t('Rajonet')}</span>
-            </TabsTrigger>
-            <TabsTrigger 
-              value="investment" 
-              className="flex items-center gap-2 py-3 px-3 text-xs font-medium data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-violet-600 data-[state=active]:text-white rounded-xl transition-all duration-300"
-            >
-              <Calculator className="h-4 w-4" />
-              <span className="hidden sm:inline">{t('Investime')}</span>
-            </TabsTrigger>
-          </TabsList>
-        )}
       </div>
 
       <TabsContent value="overview" className="space-y-8">
